@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApi.WorkerBenefits.DataAccess;
+using WebApi.WorkerBenefits.DataAccess.EntityRepositories;
+using WebApi.WorkerBenefits.Domain.Models;
 
 namespace WebApi.WorkerBenefits.Api
 {
@@ -32,6 +34,14 @@ namespace WebApi.WorkerBenefits.Api
                (
                    x => x.UseSqlServer("Server=localhost;Database=WorkerBenefitsDb;Trusted_Connection=True")
                );
+
+            services.AddTransient<IRepository<Worker>, WorkerEntityRepository>();
+            services.AddTransient<IRepository<TechnologyTypeEnrolment>, TechnologyTypeEnrolmentEntityRepository>();
+            services.AddTransient<IRepository<TechnologyTypeEntityRepository>, TechnologyTypeEntityRepository>();
+            services.AddTransient<IRepository<JobPositionEnrolment>, JobPositionEnrolmentEntityRepository>();
+            services.AddTransient<IRepository<JobPosition>, JobPositionEntityRepository>();
+            services.AddTransient<IRepository<IndividualEnrolment>, IndividualEnrolmentEntityRepository>();
+            services.AddTransient<IRepository<Benefit>, BenefitEntityRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
