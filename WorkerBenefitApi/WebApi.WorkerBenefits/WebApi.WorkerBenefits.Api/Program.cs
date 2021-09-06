@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebApi.WorkerBenefits
+namespace WebApi.WorkerBenefits.Api
 {
     public class Program
     {

@@ -1,6 +1,6 @@
 using System;
 
-namespace WebApi.WorkerBenefits
+namespace WebApi.WorkerBenefits.Api
 {
     public class WeatherForecast
     {
