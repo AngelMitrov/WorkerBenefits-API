@@ -7,7 +7,7 @@
         public int Age { get; set; }
         public int JobPositionId { get; set; }
         public JobPosition JobPosition { get; set; }
-        public int TechnologyTypeId { get; set; }
+        public int? TechnologyTypeId { get; set; }
         public TechnologyType TechnologyType { get; set; }
     }
 }

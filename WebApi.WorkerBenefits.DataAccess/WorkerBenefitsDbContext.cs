@@ -1,0 +1,24 @@
+﻿using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using WebApi.WorkerBenefits.Domain.Models;
+
+namespace WebApi.WorkerBenefits.DataAccess
+{
+    public class WorkerBenefitsDbContext : DbContext
+    {
+        public WorkerBenefitsDbContext(DbContextOptions options)
+            : base(options) { }
+
+        public DbSet<Worker> Workers { get; set; } 
+        public DbSet<JobPosition> JobPositions { get; set; } 
+        public DbSet<JobPositionEnrolment> JobPositionEnrolments { get; set; }
+        public DbSet<TechnologyType> TechnologyTypes { get; set; }
+        public DbSet<TechnologyTypeEnrolment> TechnologyTypeEnrolments { get; set; }
+        public DbSet<IndivudualEnrolment> IndividualEnrolments { get; set; }
+        public DbSet<Benefit> Benefits { get; set; }
+
+
+    }
+}

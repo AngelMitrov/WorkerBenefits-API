@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -10,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApi.WorkerBenefits.DataAccess;
 
 namespace WebApi.WorkerBenefits.Api
 {
@@ -26,6 +28,10 @@ namespace WebApi.WorkerBenefits.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddDbContext<WorkerBenefitsDbContext>
+               (
+                   x => x.UseSqlServer("Server=localhost;Database=WorkerBenefitsDb;Trusted_Connection=True")
+               );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
