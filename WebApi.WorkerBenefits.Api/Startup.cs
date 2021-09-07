@@ -37,7 +37,7 @@ namespace WebApi.WorkerBenefits.Api
 
             services.AddTransient<IRepository<Worker>, WorkerEntityRepository>();
             services.AddTransient<IRepository<TechnologyTypeEnrolment>, TechnologyTypeEnrolmentEntityRepository>();
-            services.AddTransient<IRepository<TechnologyTypeEntityRepository>, TechnologyTypeEntityRepository>();
+            services.AddTransient<IRepository<TechnologyType>, TechnologyTypeEntityRepository>();
             services.AddTransient<IRepository<JobPositionEnrolment>, JobPositionEnrolmentEntityRepository>();
             services.AddTransient<IRepository<JobPosition>, JobPositionEntityRepository>();
             services.AddTransient<IRepository<IndividualEnrolment>, IndividualEnrolmentEntityRepository>();

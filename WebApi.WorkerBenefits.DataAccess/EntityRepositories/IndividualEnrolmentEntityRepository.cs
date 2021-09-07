@@ -1,42 +1,62 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using WebApi.WorkerBenefits.Domain.Models;
 
 namespace WebApi.WorkerBenefits.DataAccess.EntityRepositories
 {
-    public class IndividualEnrolmentEntityRepository : IRepository<IndivudualEnrolment>
+    public class IndividualEnrolmentEntityRepository : IRepository<IndividualEnrolment>
     {
-        private WorkerBenefitsDbContext _workerBenefitsDbConctext;
+        private WorkerBenefitsDbContext _workerBenefitsDbContext;
 
         public IndividualEnrolmentEntityRepository(WorkerBenefitsDbContext workerBenefitsDbConctext)
         {
-            _workerBenefitsDbConctext = workerBenefitsDbConctext;
+            _workerBenefitsDbContext = workerBenefitsDbConctext;
         }
 
         public void DeleteById(int id)
         {
-            throw new NotImplementedException();
+            IndividualEnrolment individualEnrolment = _workerBenefitsDbContext.IndividualEnrolments.FirstOrDefault(q => q.Id.Equals(id));
+            if (individualEnrolment != null)
+            {
+                _workerBenefitsDbContext.IndividualEnrolments.Remove(individualEnrolment);
+            }
+            _workerBenefitsDbContext.SaveChanges();
         }
 
-        public List<IndivudualEnrolment> GetAll()
+        public List<IndividualEnrolment> GetAll()
         {
-            throw new NotImplementedException();
+            return _workerBenefitsDbContext.IndividualEnrolments.ToList();
         }
 
-        public IndivudualEnrolment GetById(int id)
+        public IndividualEnrolment GetById(int id)
         {
-            throw new NotImplementedException();
+            return _workerBenefitsDbContext.IndividualEnrolments.FirstOrDefault(x => x.Id.Equals(id));
         }
 
-        public int Insert(IndivudualEnrolment entity)
+        public int Insert(IndividualEnrolment entity)
         {
-            throw new NotImplementedException();
+            _workerBenefitsDbContext.IndividualEnrolments.Add(entity);
+            _workerBenefitsDbContext.SaveChanges();
+            return entity.Id;
         }
 
-        public void Update(IndivudualEnrolment entity)
+        public void Update(IndividualEnrolment entity)
         {
-            throw new NotImplementedException();
+            IndividualEnrolment individualEnrolment = _workerBenefitsDbContext.IndividualEnrolments.FirstOrDefault(x => x.Id.Equals(entity.Id));
+
+            if (individualEnrolment != null)
+            {
+                individualEnrolment.Worker = entity.Worker;
+                individualEnrolment.WorkerId = entity.WorkerId;
+                individualEnrolment.EffectiveFrom = entity.EffectiveFrom;
+                individualEnrolment.EffectiveTo = entity.EffectiveTo;
+                individualEnrolment.CreatedOn = entity.CreatedOn;
+                individualEnrolment.UpdatedOn = DateTime.UtcNow;
+            }
+
+            _workerBenefitsDbContext.SaveChanges();
         }
     }
 }

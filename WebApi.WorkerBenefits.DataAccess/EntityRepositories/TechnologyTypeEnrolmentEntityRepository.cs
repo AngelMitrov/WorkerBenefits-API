@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using WebApi.WorkerBenefits.Domain.Models;
 
@@ -16,27 +17,44 @@ namespace WebApi.WorkerBenefits.DataAccess.EntityRepositories
 
         public void DeleteById(int id)
         {
-            throw new NotImplementedException();
+            TechnologyTypeEnrolment techTypeEnrolment = _workerBenefitsDbContext.TechnologyTypeEnrolments.FirstOrDefault(x => x.Id.Equals(id));
+            if (techTypeEnrolment != null)
+            {
+                _workerBenefitsDbContext.TechnologyTypeEnrolments.Remove(techTypeEnrolment);
+            }
+            _workerBenefitsDbContext.SaveChanges();
         }
 
         public List<TechnologyTypeEnrolment> GetAll()
         {
-            throw new NotImplementedException();
+            return _workerBenefitsDbContext.TechnologyTypeEnrolments.ToList();
         }
 
         public TechnologyTypeEnrolment GetById(int id)
         {
-            throw new NotImplementedException();
+            return _workerBenefitsDbContext.TechnologyTypeEnrolments.FirstOrDefault(x => x.Id.Equals(id));
         }
 
         public int Insert(TechnologyTypeEnrolment entity)
         {
-            throw new NotImplementedException();
+            _workerBenefitsDbContext.TechnologyTypeEnrolments.Add(entity);
+            _workerBenefitsDbContext.SaveChanges();
+            return entity.Id;
         }
 
         public void Update(TechnologyTypeEnrolment entity)
         {
-            throw new NotImplementedException();
+            TechnologyTypeEnrolment technologyTypeEnrolment = _workerBenefitsDbContext.TechnologyTypeEnrolments.FirstOrDefault(x => x.Id.Equals(entity.Id));
+            if (technologyTypeEnrolment != null)
+            {
+                technologyTypeEnrolment.TechnologyType = entity.TechnologyType;
+                technologyTypeEnrolment.TechnologyTypeId = entity.TechnologyTypeId;
+                technologyTypeEnrolment.EffectiveFrom = entity.EffectiveFrom;
+                technologyTypeEnrolment.EffectiveTo = entity.EffectiveTo;
+                technologyTypeEnrolment.CreatedOn = entity.CreatedOn;
+                technologyTypeEnrolment.UpdatedOn = DateTime.UtcNow;
+            }
+            _workerBenefitsDbContext.SaveChanges();
         }
     }
 }

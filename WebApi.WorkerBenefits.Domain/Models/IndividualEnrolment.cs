@@ -1,6 +1,6 @@
 ﻿namespace WebApi.WorkerBenefits.Domain.Models
 {
-    public class IndivudualEnrolment : Enrolment
+    public class IndividualEnrolment : Enrolment
     {
         public int WorkerId { get; set; }
         public Worker Worker { get; set; }

@@ -1,42 +1,63 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using WebApi.WorkerBenefits.Domain.Enums;
 using WebApi.WorkerBenefits.Domain.Models;
 
 namespace WebApi.WorkerBenefits.DataAccess.EntityRepositories
 {
     public class BenefitEntityRepository : IRepository<Benefit>
     {
-        private WorkerBenefitsDbContext _workerBenefitsDbConctext;
+        private WorkerBenefitsDbContext _workerBenefitsDbContext;
 
         public BenefitEntityRepository(WorkerBenefitsDbContext workerBenefitsDbConctext)
         {
-            _workerBenefitsDbConctext = workerBenefitsDbConctext;
+            _workerBenefitsDbContext = workerBenefitsDbConctext;
         }
 
         public void DeleteById(int id)
         {
-            throw new NotImplementedException();
+            Benefit benefit = _workerBenefitsDbContext.Benefits.FirstOrDefault(q => q.Id.Equals(id));
+            if(benefit != null)
+            {
+                _workerBenefitsDbContext.Benefits.Remove(benefit);
+            }
+            _workerBenefitsDbContext.SaveChanges();
         }
 
         public List<Benefit> GetAll()
         {
-            throw new NotImplementedException();
+            return _workerBenefitsDbContext.Benefits.ToList();
         }
 
         public Benefit GetById(int id)
         {
-            throw new NotImplementedException();
+            return _workerBenefitsDbContext.Benefits.FirstOrDefault(x => x.Id.Equals(id));
         }
 
         public int Insert(Benefit entity)
         {
-            throw new NotImplementedException();
+            _workerBenefitsDbContext.Benefits.Add(entity);
+            _workerBenefitsDbContext.SaveChanges();
+            return entity.Id;
         }
 
         public void Update(Benefit entity)
         {
-            throw new NotImplementedException();
+            Benefit benefit = _workerBenefitsDbContext.Benefits.FirstOrDefault(x => x.Id.Equals(entity.Id));
+
+            if (benefit != null)
+            {
+                benefit.Name = entity.Name;
+                benefit.BenefitType = entity.BenefitType;
+                benefit.BenefitTypeId = entity.BenefitTypeId;
+                benefit.CreatedOn = entity.CreatedOn;
+                benefit.UpdatedOn = DateTime.UtcNow;
+
+            }
+
+            _workerBenefitsDbContext.SaveChanges();
         }
     }
 }
