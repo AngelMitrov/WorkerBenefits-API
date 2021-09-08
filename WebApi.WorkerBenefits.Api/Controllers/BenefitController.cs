@@ -8,6 +8,7 @@ using WebApi.WorkerBenefits.DataAccess;
 using WebApi.WorkerBenefits.DataAccess.EntityRepositories;
 using WebApi.WorkerBenefits.Domain.Enums;
 using WebApi.WorkerBenefits.Domain.Models;
+using WebApi.WorkerBenefits.Services;
 
 namespace WebApi.WorkerBenefits.Api.Controllers
 {
@@ -15,28 +16,18 @@ namespace WebApi.WorkerBenefits.Api.Controllers
     [ApiController]
     public class BenefitController : ControllerBase
     {
-        private IRepository<Benefit> _benefitRepository;
 
-        public BenefitController(BenefitEntityRepository benefitRepository)
+        private IBenefitService _benefitService;
+
+        public BenefitController(IBenefitService benefitService)
         {
-            _benefitRepository = benefitRepository;
+            _benefitService = benefitService;
         }
-
-        Benefit newBenefit = new Benefit()
-        {
-            Id = 1,
-            BenefitType = BenefitType.Individual,
-            BenefitTypeId = 2,
-            Name = "Angel",
-            CreatedOn = DateTime.UtcNow,
-            UpdatedOn = DateTime.UtcNow
-        };
 
         [HttpGet("all")]
         public ActionResult<List<Benefit>> GetAllBenefits()
         {
-            _benefitRepository.Insert(newBenefit);
-            List<Benefit> benefits = _benefitRepository.GetAll();
+            List<Benefit> benefits = _benefitService.GetAllBenefits();
 
             if (benefits.Count() == 0)
             {
@@ -45,12 +36,37 @@ namespace WebApi.WorkerBenefits.Api.Controllers
             return Ok(benefits);
         }
 
+        [HttpGet("all/{id}")]
+        public ActionResult<Benefit> GetBenefitsById([FromRoute] int id)
+        {
+            Benefit benefit = _benefitService.GetBenefitById(id);
+
+            if(benefit == null)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, "A benefit with that ID does not exist");
+            }
+            return Ok(benefit);
+        }
+
+        [HttpPost("update")]
+        public void UpdateBenefit([FromBody] Benefit entity)
+        {
+            _benefitService.UpdateBenefit(entity);
+        }
+
+        [HttpDelete("delete/{id}")]
+        public ActionResult DeleteBenefitById([FromRoute] int id)
+        {
+            _benefitService.DeleteBenefitById(id);
+            return StatusCode(StatusCodes.Status200OK, "Benefit Deleted Succesfully");
+        }
+
 
         [HttpPost("add")]
         public ActionResult AddBenefit(Benefit entity)
         {
-            _benefitRepository.Insert(entity);
-            return StatusCode(StatusCodes.Status201Created);
+            _benefitService.AddNewBenefit(entity);
+            return StatusCode(StatusCodes.Status201Created, entity);
         }
     }
 }

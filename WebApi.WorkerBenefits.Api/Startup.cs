@@ -14,6 +14,8 @@ using System.Threading.Tasks;
 using WebApi.WorkerBenefits.DataAccess;
 using WebApi.WorkerBenefits.DataAccess.EntityRepositories;
 using WebApi.WorkerBenefits.Domain.Models;
+using WebApi.WorkerBenefits.Services;
+using WebApi.WorkerBenefits.Services.Interfaces;
 
 namespace WebApi.WorkerBenefits.Api
 {
@@ -42,6 +44,13 @@ namespace WebApi.WorkerBenefits.Api
             services.AddTransient<IRepository<JobPosition>, JobPositionEntityRepository>();
             services.AddTransient<IRepository<IndividualEnrolment>, IndividualEnrolmentEntityRepository>();
             services.AddTransient<IRepository<Benefit>, BenefitEntityRepository>();
+            services.AddTransient<IBenefitService, BenefitService>();
+            services.AddTransient<IWorkerService, WorkerService>();
+            services.AddTransient<IIndividualEnrolmentService, IndividualEnrolmentService>();
+            services.AddTransient<ITechnologyTypeService, TechnologyTypeService>();
+            services.AddTransient<ITechnologyTypeEnrolmentService, TechnologyTypeEnrolmentService>();
+            services.AddTransient<IJobPositionService, JobPositionService>();
+            services.AddTransient<IJobPositionEnrolmentService, JobPositionEnrolmentService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

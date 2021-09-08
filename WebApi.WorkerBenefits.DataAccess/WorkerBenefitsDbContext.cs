@@ -20,21 +20,27 @@ namespace WebApi.WorkerBenefits.DataAccess
         public DbSet<IndividualEnrolment> IndividualEnrolments { get; set; }
         public DbSet<Benefit> Benefits { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder
-                .Entity<Benefit>()
-                .HasData(
-                new Benefit()
-                {
-                    Id = 1,
-                    BenefitType = BenefitType.Individual,
-                    BenefitTypeId = 2,
-                    Name = "Angel",
-                    CreatedOn = DateTime.UtcNow,
-                    UpdatedOn = DateTime.UtcNow,
-                }
-                ); ;
-        }
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder
+        //        .Entity<Benefit>()
+        //        .HasData(
+        //        new Benefit()
+        //        {
+        //            BenefitType = BenefitType.Individual,
+        //            BenefitTypeId = 2,
+        //            Name = "Benefit1",
+        //            CreatedOn = DateTime.UtcNow,
+        //            UpdatedOn = DateTime.UtcNow,
+        //        }, new Benefit()
+        //        {
+        //            BenefitType = BenefitType.TechnologyType,
+        //            BenefitTypeId = 4,
+        //            Name = "Benefit2",
+        //            CreatedOn = DateTime.UtcNow,
+        //            UpdatedOn = DateTime.UtcNow,
+        //        }
+        //        ); ;
+        //}
     }
 }

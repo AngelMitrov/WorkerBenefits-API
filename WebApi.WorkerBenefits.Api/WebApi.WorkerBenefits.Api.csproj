@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WebApi.WorkerBenefits.DataAccess\WebApi.WorkerBenefits.DataAccess.csproj" />
+    <ProjectReference Include="..\WebApi.WorkerBenefits.Services\WebApi.WorkerBenefits.Services.csproj" />
   </ItemGroup>
 
 
