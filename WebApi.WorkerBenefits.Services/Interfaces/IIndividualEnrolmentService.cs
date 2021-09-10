@@ -7,10 +7,10 @@ namespace WebApi.WorkerBenefits.Services.Interfaces
 {
     public interface IIndividualEnrolmentService
     {
-        public List<IndividualEnrolment> GetAllIndividualEnrolments();
-        public IndividualEnrolment GetIndividualEnrolmentById(int id);
-        public int AddNewIndividualEnrolment(IndividualEnrolment entity);
-        public void UpdateIndividualEnrolment(IndividualEnrolment entity);
-        public void DeleteIndividualEnrolmentById(int id);
+        List<IndividualEnrolment> GetAllIndividualEnrolments();
+        IndividualEnrolment GetIndividualEnrolmentById(int id);
+        int AddNewIndividualEnrolment(IndividualEnrolment entity);
+        void UpdateIndividualEnrolment(IndividualEnrolment entity);
+        void DeleteIndividualEnrolmentById(int id);
     }
 }

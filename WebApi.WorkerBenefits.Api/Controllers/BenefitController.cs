@@ -27,46 +27,35 @@ namespace WebApi.WorkerBenefits.Api.Controllers
         [HttpGet("all")]
         public ActionResult<List<Benefit>> GetAllBenefits()
         {
-            List<Benefit> benefits = _benefitService.GetAllBenefits();
-
-            if (benefits.Count() == 0)
-            {
-                return StatusCode(StatusCodes.Status404NotFound, "There isnt any benefits");
-            }
-            return Ok(benefits);
+            return _benefitService.GetAllBenefits();
         }
 
         [HttpGet("all/{id}")]
         public ActionResult<Benefit> GetBenefitsById([FromRoute] int id)
         {
-            Benefit benefit = _benefitService.GetBenefitById(id);
-
-            if(benefit == null)
-            {
-                return StatusCode(StatusCodes.Status404NotFound, "A benefit with that ID does not exist");
-            }
-            return Ok(benefit);
+            return _benefitService.GetBenefitById(id);
         }
 
-        [HttpPost("update")]
-        public void UpdateBenefit([FromBody] Benefit entity)
+        [HttpPut("update")]
+        public IActionResult UpdateBenefit([FromBody] Benefit benefit)
         {
-            _benefitService.UpdateBenefit(entity);
+            _benefitService.UpdateBenefit(benefit);
+            return StatusCode(StatusCodes.Status200OK, "Benefit Successfully Updated!");
         }
 
         [HttpDelete("delete/{id}")]
-        public ActionResult DeleteBenefitById([FromRoute] int id)
+        public IActionResult DeleteBenefitById([FromRoute] int id)
         {
             _benefitService.DeleteBenefitById(id);
-            return StatusCode(StatusCodes.Status200OK, "Benefit Deleted Succesfully");
+            return StatusCode(StatusCodes.Status200OK, "Benefit Succesfully Deleted!");
         }
 
 
         [HttpPost("add")]
-        public ActionResult AddBenefit(Benefit entity)
+        public IActionResult AddBenefit(Benefit entity)
         {
             _benefitService.AddNewBenefit(entity);
-            return StatusCode(StatusCodes.Status201Created, entity);
+            return StatusCode(StatusCodes.Status201Created, "Benefit Successfully Created!");
         }
     }
 }

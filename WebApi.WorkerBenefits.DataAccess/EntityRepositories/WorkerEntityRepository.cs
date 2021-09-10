@@ -18,20 +18,33 @@ namespace WebApi.WorkerBenefits.DataAccess.EntityRepositories
         public void DeleteById(int id)
         {
             Worker worker = _workerBenefitsDbContext.Workers.FirstOrDefault(x => x.Id.Equals(id));
-            if(worker != null)
+            if(worker == null)
             {
-                _workerBenefitsDbContext.Workers.Remove(worker);
+                throw new Exception($"Worker with ID: {id} not found!");
             }
+            _workerBenefitsDbContext.Workers.Remove(worker);
+            _workerBenefitsDbContext.SaveChanges();
         }
 
         public List<Worker> GetAll()
         {
-            return _workerBenefitsDbContext.Workers.ToList();
+            List<Worker> workers = _workerBenefitsDbContext.Workers.ToList();
+            if (workers.Count() == 0)
+            {
+                throw new Exception($"You dont have any available workers!");
+            }
+            return workers;
         }
 
         public Worker GetById(int id)
         {
-            return _workerBenefitsDbContext.Workers.FirstOrDefault(x => x.Id.Equals(id));
+            Worker worker = _workerBenefitsDbContext.Workers.FirstOrDefault(x => x.Id.Equals(id));
+
+            if (worker == null)
+            {
+                throw new Exception($"A worker with ID: {id} does not exist!");
+            }
+            return worker;
         }
 
         public int Insert(Worker entity)
@@ -44,17 +57,19 @@ namespace WebApi.WorkerBenefits.DataAccess.EntityRepositories
         public void Update(Worker entity)
         {
             Worker worker = _workerBenefitsDbContext.Workers.FirstOrDefault(x => x.Id.Equals(entity.Id));
-            if(worker != null)
+            if(worker == null)
             {
-                worker.Firstname = entity.Firstname;
-                worker.Lastname = entity.Lastname;
-                worker.JobPosition = entity.JobPosition;
-                worker.JobPositionId = entity.JobPositionId;
-                worker.TechnologyType = entity.TechnologyType;
-                worker.TechnologyTypeId = entity.TechnologyTypeId;
-                worker.CreatedOn = entity.CreatedOn;
-                worker.UpdatedOn = DateTime.UtcNow;
+                throw new Exception($"Worker with ID: {entity.Id} not found!");
             }
+            worker.Firstname = entity.Firstname;
+            worker.Lastname = entity.Lastname;
+            worker.JobPosition = entity.JobPosition;
+            worker.JobPositionId = entity.JobPositionId;
+            worker.TechnologyType = entity.TechnologyType;
+            worker.TechnologyTypeId = entity.TechnologyTypeId;
+            worker.CreatedOn = entity.CreatedOn;
+            worker.UpdatedOn = DateTime.UtcNow;
+
             _workerBenefitsDbContext.SaveChanges();
         }
     }

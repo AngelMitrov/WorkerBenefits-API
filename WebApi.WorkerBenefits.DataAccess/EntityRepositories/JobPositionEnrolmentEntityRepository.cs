@@ -18,21 +18,33 @@ namespace WebApi.WorkerBenefits.DataAccess.EntityRepositories
         public void DeleteById(int id)
         {
             JobPositionEnrolment jobPositionEnrolment = _workerBenefitsDbContext.JobPositionEnrolments.FirstOrDefault(q => q.Id.Equals(id));
-            if (jobPositionEnrolment != null)
+            if (jobPositionEnrolment == null)
             {
-                _workerBenefitsDbContext.JobPositionEnrolments.Remove(jobPositionEnrolment);
+                throw new Exception($"Job position enrolment with ID: {id} not found!");
             }
+            _workerBenefitsDbContext.JobPositionEnrolments.Remove(jobPositionEnrolment);
             _workerBenefitsDbContext.SaveChanges();
         }
 
         public List<JobPositionEnrolment> GetAll()
         {
-            return _workerBenefitsDbContext.JobPositionEnrolments.ToList();
+            List<JobPositionEnrolment> jobPositionEnrolments = _workerBenefitsDbContext.JobPositionEnrolments.ToList();
+            if (jobPositionEnrolments.Count() == 0)
+            {
+                throw new Exception($"You dont have any available job position enrolments!");
+            }
+            return jobPositionEnrolments;
         }
 
         public JobPositionEnrolment GetById(int id)
         {
-            return _workerBenefitsDbContext.JobPositionEnrolments.FirstOrDefault(x => x.Id.Equals(id));
+            JobPositionEnrolment jobPositionEnrolment = _workerBenefitsDbContext.JobPositionEnrolments.FirstOrDefault(x => x.Id.Equals(id));
+
+            if (jobPositionEnrolment == null)
+            {
+                throw new Exception($"A job position enrolment with ID: {id} does not exist!");
+            }
+            return jobPositionEnrolment;
         }
 
         public int Insert(JobPositionEnrolment entity)
@@ -46,16 +58,16 @@ namespace WebApi.WorkerBenefits.DataAccess.EntityRepositories
         {
             JobPositionEnrolment jobPositionEnrolment = _workerBenefitsDbContext.JobPositionEnrolments.FirstOrDefault(x => x.Id.Equals(entity.Id));
 
-            if (jobPositionEnrolment != null)
+            if (jobPositionEnrolment == null)
             {
-                jobPositionEnrolment.JobPosition = entity.JobPosition;
-                jobPositionEnrolment.JobPositionId = entity.JobPositionId;
-                jobPositionEnrolment.EffectiveFrom = entity.EffectiveFrom;
-                jobPositionEnrolment.EffectiveTo = entity.EffectiveTo;
-                jobPositionEnrolment.CreatedOn = entity.CreatedOn;
-                jobPositionEnrolment.UpdatedOn = DateTime.UtcNow;
-
+                throw new Exception($"Job position enrolment with ID: {entity.Id} not found!");
             }
+            jobPositionEnrolment.JobPosition = entity.JobPosition;
+            jobPositionEnrolment.JobPositionId = entity.JobPositionId;
+            jobPositionEnrolment.EffectiveFrom = entity.EffectiveFrom;
+            jobPositionEnrolment.EffectiveTo = entity.EffectiveTo;
+            jobPositionEnrolment.CreatedOn = entity.CreatedOn;
+            jobPositionEnrolment.UpdatedOn = DateTime.UtcNow;
 
             _workerBenefitsDbContext.SaveChanges();
         }

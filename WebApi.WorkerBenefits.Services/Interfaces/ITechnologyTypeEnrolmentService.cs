@@ -7,10 +7,10 @@ namespace WebApi.WorkerBenefits.Services.Interfaces
 {
     public interface ITechnologyTypeEnrolmentService
     {
-        public List<TechnologyTypeEnrolment> GetAllTechnologyTypeEnrolments();
-        public TechnologyTypeEnrolment GetTechnologyTypeEnrolmentById(int id);
-        public int AddNewTechnologyTypeEnrolment(TechnologyTypeEnrolment entity);
-        public void UpdateTechnologyTypeEnrolment(TechnologyTypeEnrolment entity);
-        public void DeleteTechnologyTypeEnrolmentById(int id);
+        List<TechnologyTypeEnrolment> GetAllTechnologyTypeEnrolments();
+        TechnologyTypeEnrolment GetTechnologyTypeEnrolmentById(int id);
+        int AddNewTechnologyTypeEnrolment(TechnologyTypeEnrolment entity);
+        void UpdateTechnologyTypeEnrolment(TechnologyTypeEnrolment entity);
+        void DeleteTechnologyTypeEnrolmentById(int id);
     }
 }

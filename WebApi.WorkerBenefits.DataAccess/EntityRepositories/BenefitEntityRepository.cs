@@ -19,21 +19,34 @@ namespace WebApi.WorkerBenefits.DataAccess.EntityRepositories
         public void DeleteById(int id)
         {
             Benefit benefit = _workerBenefitsDbContext.Benefits.FirstOrDefault(q => q.Id.Equals(id));
-            if(benefit != null)
+            if(benefit == null)
             {
-                _workerBenefitsDbContext.Benefits.Remove(benefit);
+                throw new Exception($"Benefit with ID: {id} not found!");
             }
+            _workerBenefitsDbContext.Benefits.Remove(benefit);
             _workerBenefitsDbContext.SaveChanges();
         }
 
         public List<Benefit> GetAll()
         {
-            return _workerBenefitsDbContext.Benefits.ToList();
+            List<Benefit> benefits = _workerBenefitsDbContext.Benefits.ToList();
+            if(benefits.Count() == 0)
+            {
+                throw new Exception($"You dont have any available benefits!");
+            }
+
+            return benefits;
         }
 
         public Benefit GetById(int id)
         {
-            return _workerBenefitsDbContext.Benefits.FirstOrDefault(x => x.Id.Equals(id));
+            Benefit benefit = _workerBenefitsDbContext.Benefits.FirstOrDefault(x => x.Id.Equals(id));
+
+            if (benefit == null)
+            {
+                throw new Exception($"A benefit with ID: {id} does not exist!");
+            }
+            return benefit;
         }
 
         public int Insert(Benefit entity)
@@ -47,15 +60,15 @@ namespace WebApi.WorkerBenefits.DataAccess.EntityRepositories
         {
             Benefit benefit = _workerBenefitsDbContext.Benefits.FirstOrDefault(x => x.Id.Equals(entity.Id));
 
-            if (benefit != null)
+            if (benefit == null)
             {
-                benefit.Name = entity.Name;
-                benefit.BenefitType = entity.BenefitType;
-                benefit.BenefitTypeId = entity.BenefitTypeId;
-                benefit.CreatedOn = entity.CreatedOn;
-                benefit.UpdatedOn = DateTime.UtcNow;
-
+                throw new Exception($"Benefit with ID: {entity.Id} not found!");
             }
+            benefit.Name = entity.Name;
+            benefit.BenefitType = entity.BenefitType;
+            benefit.BenefitTypeId = entity.BenefitTypeId;
+            benefit.CreatedOn = entity.CreatedOn;
+            benefit.UpdatedOn = DateTime.UtcNow;
 
             _workerBenefitsDbContext.SaveChanges();
         }

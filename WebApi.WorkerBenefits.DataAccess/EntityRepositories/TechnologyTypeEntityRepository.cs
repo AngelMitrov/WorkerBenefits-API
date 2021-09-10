@@ -18,21 +18,33 @@ namespace WebApi.WorkerBenefits.DataAccess.EntityRepositories
         public void DeleteById(int id)
         {
             TechnologyType techType = _workerBenefitsDbContext.TechnologyTypes.FirstOrDefault(x => x.Id.Equals(id));
-            if (techType != null)
+            if (techType == null)
             {
-                _workerBenefitsDbContext.TechnologyTypes.Remove(techType);
+                throw new Exception($"Technology type with ID: {id} not found!");
             }
+            _workerBenefitsDbContext.TechnologyTypes.Remove(techType);
             _workerBenefitsDbContext.SaveChanges();
         }
 
         public List<TechnologyType> GetAll()
         {
-            return _workerBenefitsDbContext.TechnologyTypes.ToList();
+            List<TechnologyType> technologyTypes = _workerBenefitsDbContext.TechnologyTypes.ToList();
+            if (technologyTypes.Count() == 0)
+            {
+                throw new Exception($"You dont have any available technology types!");
+            }
+            return technologyTypes;
         }
 
         public TechnologyType GetById(int id)
         {
-            return _workerBenefitsDbContext.TechnologyTypes.FirstOrDefault(x => x.Id.Equals(id));
+            TechnologyType technologyType = _workerBenefitsDbContext.TechnologyTypes.FirstOrDefault(x => x.Id.Equals(id));
+
+            if (technologyType == null)
+            {
+                throw new Exception($"A technology types with ID: {id} does not exist!");
+            }
+            return technologyType;
         }
 
         public int Insert(TechnologyType entity)
@@ -45,12 +57,14 @@ namespace WebApi.WorkerBenefits.DataAccess.EntityRepositories
         public void Update(TechnologyType entity)
         {
             TechnologyType technologyType = _workerBenefitsDbContext.TechnologyTypes.FirstOrDefault(x => x.Id.Equals(entity.Id));
-            if (technologyType != null)
+            if (technologyType == null)
             {
-                technologyType.Name = entity.Name;
-                technologyType.CreatedOn = entity.CreatedOn;
-                technologyType.UpdatedOn = DateTime.UtcNow;
+                throw new Exception($"Technology type with ID: {entity.Id} not found!");
             }
+            technologyType.Name = entity.Name;
+            technologyType.CreatedOn = entity.CreatedOn;
+            technologyType.UpdatedOn = DateTime.UtcNow;
+
             _workerBenefitsDbContext.SaveChanges();
         }
     }

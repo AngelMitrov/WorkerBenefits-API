@@ -7,10 +7,10 @@ namespace WebApi.WorkerBenefits.Services.Interfaces
 {
     public interface IWorkerService
     {
-        public List<Worker> GetAllWorkers();
-        public Worker GetWorkerById(int id);
-        public int AddNewWorker(Worker entity);
-        public void UpdateWorker(Worker entity);
-        public void DeleteWorkerById(int id);
+        List<Worker> GetAllWorkers();
+        Worker GetWorkerById(int id);
+        int AddNewWorker(Worker entity);
+        void UpdateWorker(Worker entity);
+        void DeleteWorkerById(int id);
     }
 }

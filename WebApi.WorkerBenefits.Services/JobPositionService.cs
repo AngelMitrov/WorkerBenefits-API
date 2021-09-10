@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using WebApi.WorkerBenefits.DataAccess;
 using WebApi.WorkerBenefits.Domain.Models;
@@ -35,6 +36,7 @@ namespace WebApi.WorkerBenefits.Services
         {
             return _jobPositionRepository.GetById(id);
         }
+
 
         public void UpdateJobPosition(JobPosition entity)
         {

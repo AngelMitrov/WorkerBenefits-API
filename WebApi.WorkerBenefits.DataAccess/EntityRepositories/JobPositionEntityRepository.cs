@@ -18,21 +18,33 @@ namespace WebApi.WorkerBenefits.DataAccess.EntityRepositories
         public void DeleteById(int id)
         {
             JobPosition jobPosition = _workerBenefitsDbContext.JobPositions.FirstOrDefault(x => x.Id.Equals(id));
-            if(jobPosition != null)
+            if(jobPosition == null)
             {
-                _workerBenefitsDbContext.JobPositions.Remove(jobPosition);
+                throw new Exception($"Job position with ID: {id} not found!");
             }
+            _workerBenefitsDbContext.JobPositions.Remove(jobPosition);
             _workerBenefitsDbContext.SaveChanges();
         }
 
         public List<JobPosition> GetAll()
         {
-            return _workerBenefitsDbContext.JobPositions.ToList();
+            List<JobPosition> jobPositions = _workerBenefitsDbContext.JobPositions.ToList();
+            if (jobPositions.Count() == 0)
+            {
+                throw new Exception($"You dont have any available job positions!");
+            }
+            return jobPositions;
         }
 
         public JobPosition GetById(int id)
         {
-            return _workerBenefitsDbContext.JobPositions.FirstOrDefault(x => x.Id.Equals(id));
+            JobPosition jobPosition = _workerBenefitsDbContext.JobPositions.FirstOrDefault(x => x.Id.Equals(id));
+
+            if (jobPosition == null)
+            {
+                throw new Exception($"A job position with ID: {id} does not exist!");
+            }
+            return jobPosition;
         }
 
         public int Insert(JobPosition entity)
@@ -45,12 +57,14 @@ namespace WebApi.WorkerBenefits.DataAccess.EntityRepositories
         public void Update(JobPosition entity)
         {
             JobPosition jobPos = _workerBenefitsDbContext.JobPositions.FirstOrDefault(x => x.Id.Equals(entity.Id));
-            if(jobPos != null)
+            if(jobPos == null)
             {
-                jobPos.Name = entity.Name;
-                jobPos.CreatedOn = entity.CreatedOn;
-                jobPos.UpdatedOn = DateTime.UtcNow;
+                throw new Exception($"Job position with ID: {entity.Id} not found!");
             }
+            jobPos.Name = entity.Name;
+            jobPos.CreatedOn = entity.CreatedOn;
+            jobPos.UpdatedOn = DateTime.UtcNow;
+
             _workerBenefitsDbContext.SaveChanges();
         }
     }

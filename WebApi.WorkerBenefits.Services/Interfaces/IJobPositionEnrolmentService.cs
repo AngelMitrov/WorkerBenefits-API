@@ -7,10 +7,10 @@ namespace WebApi.WorkerBenefits.Services.Interfaces
 {
     public interface IJobPositionEnrolmentService
     {
-        public List<JobPositionEnrolment> GetAllJobPositionEnrolments();
-        public JobPositionEnrolment GetJobPositionEnrolmentById(int id);
-        public int AddNewJobPositionEnrolment(JobPositionEnrolment entity);
-        public void UpdateJobPositionEnrolment(JobPositionEnrolment entity);
-        public void DeleteJobPositionEnrolmentById(int id);
+        List<JobPositionEnrolment> GetAllJobPositionEnrolments();
+        JobPositionEnrolment GetJobPositionEnrolmentById(int id);
+        int AddNewJobPositionEnrolment(JobPositionEnrolment entity);
+        void UpdateJobPositionEnrolment(JobPositionEnrolment entity);
+        void DeleteJobPositionEnrolmentById(int id);
     }
 }

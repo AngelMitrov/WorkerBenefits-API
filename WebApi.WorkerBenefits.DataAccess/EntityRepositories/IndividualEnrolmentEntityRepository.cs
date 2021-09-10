@@ -18,21 +18,33 @@ namespace WebApi.WorkerBenefits.DataAccess.EntityRepositories
         public void DeleteById(int id)
         {
             IndividualEnrolment individualEnrolment = _workerBenefitsDbContext.IndividualEnrolments.FirstOrDefault(q => q.Id.Equals(id));
-            if (individualEnrolment != null)
+            if (individualEnrolment == null)
             {
-                _workerBenefitsDbContext.IndividualEnrolments.Remove(individualEnrolment);
+                throw new Exception($"Individual enrolment with ID: {id} not found!");
             }
+                _workerBenefitsDbContext.IndividualEnrolments.Remove(individualEnrolment);
             _workerBenefitsDbContext.SaveChanges();
         }
 
         public List<IndividualEnrolment> GetAll()
         {
-            return _workerBenefitsDbContext.IndividualEnrolments.ToList();
+            List<IndividualEnrolment> individualEnrolments = _workerBenefitsDbContext.IndividualEnrolments.ToList();
+            if (individualEnrolments.Count() == 0)
+            {
+                throw new Exception($"You dont have any available individual enrolments!");
+            }
+            return individualEnrolments;
         }
 
         public IndividualEnrolment GetById(int id)
         {
-            return _workerBenefitsDbContext.IndividualEnrolments.FirstOrDefault(x => x.Id.Equals(id));
+            IndividualEnrolment individualEnrolment = _workerBenefitsDbContext.IndividualEnrolments.FirstOrDefault(x => x.Id.Equals(id));
+
+            if (individualEnrolment == null)
+            {
+                throw new Exception($"A individual enrolment with ID: {id} does not exist!");
+            }
+            return individualEnrolment;
         }
 
         public int Insert(IndividualEnrolment entity)
@@ -46,15 +58,16 @@ namespace WebApi.WorkerBenefits.DataAccess.EntityRepositories
         {
             IndividualEnrolment individualEnrolment = _workerBenefitsDbContext.IndividualEnrolments.FirstOrDefault(x => x.Id.Equals(entity.Id));
 
-            if (individualEnrolment != null)
+            if (individualEnrolment == null)
             {
-                individualEnrolment.Worker = entity.Worker;
-                individualEnrolment.WorkerId = entity.WorkerId;
-                individualEnrolment.EffectiveFrom = entity.EffectiveFrom;
-                individualEnrolment.EffectiveTo = entity.EffectiveTo;
-                individualEnrolment.CreatedOn = entity.CreatedOn;
-                individualEnrolment.UpdatedOn = DateTime.UtcNow;
+                throw new Exception($"Individual enrolment with ID: {entity.Id} not found!");
             }
+            individualEnrolment.Worker = entity.Worker;
+            individualEnrolment.WorkerId = entity.WorkerId;
+            individualEnrolment.EffectiveFrom = entity.EffectiveFrom;
+            individualEnrolment.EffectiveTo = entity.EffectiveTo;
+            individualEnrolment.CreatedOn = entity.CreatedOn;
+            individualEnrolment.UpdatedOn = DateTime.UtcNow;
 
             _workerBenefitsDbContext.SaveChanges();
         }

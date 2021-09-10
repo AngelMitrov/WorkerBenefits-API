@@ -7,10 +7,10 @@ namespace WebApi.WorkerBenefits.Services.Interfaces
 {
     public interface ITechnologyTypeService
     {
-        public List<TechnologyType> GetAllTechnologyTypes();
-        public TechnologyType GetTechnologyTypeById(int id);
-        public int AddNewTechnologyType(TechnologyType entity);
-        public void UpdateTechnologyType(TechnologyType entity);
-        public void DeleteTechnologyTypeById(int id);
+        List<TechnologyType> GetAllTechnologyTypes();
+        TechnologyType GetTechnologyTypeById(int id);
+        int AddNewTechnologyType(TechnologyType entity);
+        void UpdateTechnologyType(TechnologyType entity);
+        void DeleteTechnologyTypeById(int id);
     }
 }
