@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,7 +29,7 @@ namespace WebApi.WorkerBenefits.DataAccess.EntityRepositories
 
         public List<JobPositionEnrolment> GetAll()
         {
-            List<JobPositionEnrolment> jobPositionEnrolments = _workerBenefitsDbContext.JobPositionEnrolments.ToList();
+            List<JobPositionEnrolment> jobPositionEnrolments = _workerBenefitsDbContext.JobPositionEnrolments.Include(x => x.JobPosition).ToList();
             if (jobPositionEnrolments.Count() == 0)
             {
                 throw new Exception($"You dont have any available job position enrolments!");

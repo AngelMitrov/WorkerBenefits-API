@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,7 +29,7 @@ namespace WebApi.WorkerBenefits.DataAccess.EntityRepositories
 
         public List<TechnologyTypeEnrolment> GetAll()
         {
-            List<TechnologyTypeEnrolment> technologyTypeEnrolments = _workerBenefitsDbContext.TechnologyTypeEnrolments.ToList();
+            List<TechnologyTypeEnrolment> technologyTypeEnrolments = _workerBenefitsDbContext.TechnologyTypeEnrolments.Include(x => x.TechnologyType).ToList();
             if (technologyTypeEnrolments.Count() == 0)
             {
                 throw new Exception($"You dont have any available technology type enrolments!");

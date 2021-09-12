@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,7 +29,7 @@ namespace WebApi.WorkerBenefits.DataAccess.EntityRepositories
 
         public List<Worker> GetAll()
         {
-            List<Worker> workers = _workerBenefitsDbContext.Workers.ToList();
+            List<Worker> workers = _workerBenefitsDbContext.Workers.Include(x => x.JobPosition).Include(x => x.TechnologyType).ToList();
             if (workers.Count() == 0)
             {
                 throw new Exception($"You dont have any available workers!");
@@ -63,6 +64,7 @@ namespace WebApi.WorkerBenefits.DataAccess.EntityRepositories
             }
             worker.Firstname = entity.Firstname;
             worker.Lastname = entity.Lastname;
+            worker.Age = entity.Age;
             worker.JobPosition = entity.JobPosition;
             worker.JobPositionId = entity.JobPositionId;
             worker.TechnologyType = entity.TechnologyType;

@@ -11,18 +11,15 @@ namespace WebApi.WorkerBenefits.Services
     public class JobPositionEnrolmentService : IJobPositionEnrolmentService
     {
         private IRepository<JobPositionEnrolment> _jobPositionEnrolmentRepository;
-        private IRepository<JobPosition> _jobPositionRepository;
+
 
         public JobPositionEnrolmentService(IRepository<JobPositionEnrolment> jobPositionEnrolmentRepository, IRepository<JobPosition> jobPositionRepository)
         {
             _jobPositionEnrolmentRepository = jobPositionEnrolmentRepository;
-            _jobPositionRepository = jobPositionRepository;
         }
 
         public int AddNewJobPositionEnrolment(JobPositionEnrolment entity)
         {
-            JobPosition jobPos = _jobPositionRepository.GetAll().FirstOrDefault(x => x.Id.Equals(entity.JobPositionId));
-            entity.JobPosition = jobPos;
             _jobPositionEnrolmentRepository.Insert(entity);
             return entity.Id;
         }
