@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using WebApi.WorkerBenefits.Domain.Models;
 
-namespace WebApi.WorkerBenefits.DataTransferModels
+namespace WebApi.WorkerBenefits.DataTransferObjects
+
 {
-    public class BenefitsForWorker
+    public class BenefitsForWorkerDTO
     {
         public int WorkerId { get; set; }
         public Worker Worker { get; set; }
         public List<Benefit> Benefits { get; set; }
     }
 }
+

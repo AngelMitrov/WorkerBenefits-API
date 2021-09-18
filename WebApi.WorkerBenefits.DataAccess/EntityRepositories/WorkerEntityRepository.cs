@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using WebApi.WorkerBenefits.DataTransferModels;
+using WebApi.WorkerBenefits.DataTransferObjects;
 using WebApi.WorkerBenefits.Domain.Models;
 
 namespace WebApi.WorkerBenefits.DataAccess.EntityRepositories
@@ -75,25 +75,39 @@ namespace WebApi.WorkerBenefits.DataAccess.EntityRepositories
 
             _workerBenefitsDbContext.SaveChanges();
         }
-        public BenefitsForWorker GetAllBenefitsForWorkerById(int id)
+        public BenefitsForWorkerDTO GetAllBenefitsForWorkerById(int id)
         {
-            Worker worker = _workerBenefitsDbContext.Workers.Include(q => q.JobPosition).Include(q => q.TechnologyType).FirstOrDefault(x => x.Id.Equals(id));
-            Benefit jobPositionBenefit = _workerBenefitsDbContext.JobPositionEnrolments.Include(x => x.Benefit).FirstOrDefault(x => x.JobPositionId.Equals(worker.JobPositionId)).Benefit;
-            Benefit technologyTypeBenefit = _workerBenefitsDbContext.TechnologyTypeEnrolments.Include(x => x.Benefit).FirstOrDefault(x => x.TechnologyTypeId.Equals(worker.TechnologyTypeId)).Benefit;
-            Benefit individualBenefit = _workerBenefitsDbContext.IndividualEnrolments.Include(x => x.Worker).FirstOrDefault(x => x.WorkerId.Equals(worker.Id)).Benefit;
+            Worker worker = _workerBenefitsDbContext.Workers
+                                                    .Include(q => q.JobPosition)
+                                                    .Include(q => q.TechnologyType)
+                                                    .FirstOrDefault(x => x.Id.Equals(id));
 
-            BenefitsForWorker workersBenefits = new BenefitsForWorker
+            Benefit jobPositionBenefit = _workerBenefitsDbContext.JobPositionEnrolments
+                                                                 .Include(x => x.Benefit)
+                                                                 .Include(x => x.JobPosition)
+                                                                 .FirstOrDefault(x => x.JobPositionId.Equals(worker.JobPositionId))
+                                                                 .Benefit;
+
+            Benefit technologyTypeBenefit = _workerBenefitsDbContext.TechnologyTypeEnrolments
+                                                                    .Include(x => x.Benefit)
+                                                                    .Include(x => x.TechnologyType)
+                                                                    .FirstOrDefault(x => x.TechnologyTypeId.Equals(worker.TechnologyTypeId))
+                                                                    .Benefit;
+
+            Benefit individualBenefit = _workerBenefitsDbContext.IndividualEnrolments
+                                                                .Include(x => x.Worker)
+                                                                .FirstOrDefault(x => x.WorkerId.Equals(worker.Id))
+                                                                .Benefit;
+            List<Benefit> benefits = new List<Benefit>() { jobPositionBenefit, technologyTypeBenefit, individualBenefit };
+
+            BenefitsForWorkerDTO workerBenefits = new BenefitsForWorkerDTO()
             {
                 WorkerId = worker.Id,
-                Benefits =
-                {
-                    jobPositionBenefit,
-                    technologyTypeBenefit,
-                    individualBenefit,
-                }
+                Worker = worker,
+                Benefits = benefits,
             };
 
-            return workersBenefits;
+            return workerBenefits;
         }
     }
 }

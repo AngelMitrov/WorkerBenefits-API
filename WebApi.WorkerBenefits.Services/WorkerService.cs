@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using WebApi.WorkerBenefits.DataAccess;
-using WebApi.WorkerBenefits.DataTransferModels;
+using WebApi.WorkerBenefits.DataTransferObjects;
 using WebApi.WorkerBenefits.Domain.Models;
 using WebApi.WorkerBenefits.Services.Interfaces;
 
@@ -32,7 +32,7 @@ namespace WebApi.WorkerBenefits.Services
             return _workerRepository.GetAll();
         }
 
-        public BenefitsForWorker GetAllBenefitsForWorkerById(int id)
+        public BenefitsForWorkerDTO GetAllBenefitsForWorkerById(int id)
         {
             return _workerRepository.GetAllBenefitsForWorkerById(id);
         }

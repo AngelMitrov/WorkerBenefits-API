@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebApi.WorkerBenefits.DataTransferModels;
+using WebApi.WorkerBenefits.DataTransferObjects;
 using WebApi.WorkerBenefits.Domain.Models;
 using WebApi.WorkerBenefits.Services.Interfaces;
 
@@ -55,7 +55,7 @@ namespace WebApi.WorkerBenefits.Api.Controllers
         }
 
         [HttpGet("workerbenefits/{id}")]
-        public ActionResult<BenefitsForWorker> GetWorkerBenefitsById(int id)
+        public ActionResult<BenefitsForWorkerDTO> GetWorkerBenefitsById(int id)
         {
             return _workerService.GetAllBenefitsForWorkerById(id);
         }
