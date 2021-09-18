@@ -29,7 +29,7 @@ namespace WebApi.WorkerBenefits.DataAccess.EntityRepositories
 
         public List<JobPositionEnrolment> GetAll()
         {
-            List<JobPositionEnrolment> jobPositionEnrolments = _workerBenefitsDbContext.JobPositionEnrolments.Include(x => x.JobPosition).ToList();
+            List<JobPositionEnrolment> jobPositionEnrolments = _workerBenefitsDbContext.JobPositionEnrolments.Include(x => x.Benefit).Include(x => x.JobPosition).ToList();
             if (jobPositionEnrolments.Count() == 0)
             {
                 throw new Exception($"You dont have any available job position enrolments!");
@@ -63,8 +63,8 @@ namespace WebApi.WorkerBenefits.DataAccess.EntityRepositories
             {
                 throw new Exception($"Job position enrolment with ID: {entity.Id} not found!");
             }
-            jobPositionEnrolment.JobPosition = entity.JobPosition;
             jobPositionEnrolment.JobPositionId = entity.JobPositionId;
+            jobPositionEnrolment.BenefitId = entity.BenefitId;
             jobPositionEnrolment.EffectiveFrom = entity.EffectiveFrom;
             jobPositionEnrolment.EffectiveTo = entity.EffectiveTo;
             jobPositionEnrolment.CreatedOn = entity.CreatedOn;

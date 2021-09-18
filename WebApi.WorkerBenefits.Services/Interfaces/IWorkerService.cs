@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using WebApi.WorkerBenefits.DataTransferModels;
 using WebApi.WorkerBenefits.Domain.Models;
 
 namespace WebApi.WorkerBenefits.Services.Interfaces
@@ -12,5 +13,6 @@ namespace WebApi.WorkerBenefits.Services.Interfaces
         int AddNewWorker(Worker entity);
         void UpdateWorker(Worker entity);
         void DeleteWorkerById(int id);
+        BenefitsForWorker GetAllBenefitsForWorkerById(int id);
     }
 }

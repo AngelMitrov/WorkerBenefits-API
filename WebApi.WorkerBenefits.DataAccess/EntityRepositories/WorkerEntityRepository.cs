@@ -3,11 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using WebApi.WorkerBenefits.DataTransferModels;
 using WebApi.WorkerBenefits.Domain.Models;
 
 namespace WebApi.WorkerBenefits.DataAccess.EntityRepositories
 {
-    public class WorkerEntityRepository : IRepository<Worker>
+    public class WorkerEntityRepository : IWorkerEntityRepository
     {
         private WorkerBenefitsDbContext _workerBenefitsDbContext;
 
@@ -73,6 +74,26 @@ namespace WebApi.WorkerBenefits.DataAccess.EntityRepositories
             worker.UpdatedOn = DateTime.UtcNow;
 
             _workerBenefitsDbContext.SaveChanges();
+        }
+        public BenefitsForWorker GetAllBenefitsForWorkerById(int id)
+        {
+            Worker worker = _workerBenefitsDbContext.Workers.Include(q => q.JobPosition).Include(q => q.TechnologyType).FirstOrDefault(x => x.Id.Equals(id));
+            Benefit jobPositionBenefit = _workerBenefitsDbContext.JobPositionEnrolments.Include(x => x.Benefit).FirstOrDefault(x => x.JobPositionId.Equals(worker.JobPositionId)).Benefit;
+            Benefit technologyTypeBenefit = _workerBenefitsDbContext.TechnologyTypeEnrolments.Include(x => x.Benefit).FirstOrDefault(x => x.TechnologyTypeId.Equals(worker.TechnologyTypeId)).Benefit;
+            Benefit individualBenefit = _workerBenefitsDbContext.IndividualEnrolments.Include(x => x.Worker).FirstOrDefault(x => x.WorkerId.Equals(worker.Id)).Benefit;
+
+            BenefitsForWorker workersBenefits = new BenefitsForWorker
+            {
+                WorkerId = worker.Id,
+                Benefits =
+                {
+                    jobPositionBenefit,
+                    technologyTypeBenefit,
+                    individualBenefit,
+                }
+            };
+
+            return workersBenefits;
         }
     }
 }

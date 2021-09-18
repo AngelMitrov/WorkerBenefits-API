@@ -29,7 +29,7 @@ namespace WebApi.WorkerBenefits.DataAccess.EntityRepositories
 
         public List<TechnologyTypeEnrolment> GetAll()
         {
-            List<TechnologyTypeEnrolment> technologyTypeEnrolments = _workerBenefitsDbContext.TechnologyTypeEnrolments.Include(x => x.TechnologyType).ToList();
+            List<TechnologyTypeEnrolment> technologyTypeEnrolments = _workerBenefitsDbContext.TechnologyTypeEnrolments.Include(x => x.Benefit).Include(x => x.TechnologyType).ToList();
             if (technologyTypeEnrolments.Count() == 0)
             {
                 throw new Exception($"You dont have any available technology type enrolments!");
@@ -62,8 +62,8 @@ namespace WebApi.WorkerBenefits.DataAccess.EntityRepositories
             {
                 throw new Exception($"Technology type enrolment with ID: {entity.Id} not found!");
             }
-            technologyTypeEnrolment.TechnologyType = entity.TechnologyType;
             technologyTypeEnrolment.TechnologyTypeId = entity.TechnologyTypeId;
+            technologyTypeEnrolment.BenefitId = entity.BenefitId;
             technologyTypeEnrolment.EffectiveFrom = entity.EffectiveFrom;
             technologyTypeEnrolment.EffectiveTo = entity.EffectiveTo;
             technologyTypeEnrolment.CreatedOn = entity.CreatedOn;

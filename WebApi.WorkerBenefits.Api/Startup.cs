@@ -37,7 +37,7 @@ namespace WebApi.WorkerBenefits.Api
                    x => x.UseSqlServer("Server=localhost;Database=WorkerBenefitsDb;Trusted_Connection=True")
                );
 
-            services.AddTransient<IRepository<Worker>, WorkerEntityRepository>();
+            services.AddTransient<IWorkerEntityRepository, WorkerEntityRepository>();
             services.AddTransient<IRepository<TechnologyTypeEnrolment>, TechnologyTypeEnrolmentEntityRepository>();
             services.AddTransient<IRepository<TechnologyType>, TechnologyTypeEntityRepository>();
             services.AddTransient<IRepository<JobPositionEnrolment>, JobPositionEnrolmentEntityRepository>();

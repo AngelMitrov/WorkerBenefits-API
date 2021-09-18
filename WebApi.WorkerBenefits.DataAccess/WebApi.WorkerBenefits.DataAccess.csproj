@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WebApi.WorkerBenefits.DataTransferModels\WebApi.WorkerBenefits.DataTransferModels.csproj" />
     <ProjectReference Include="..\WebApi.WorkerBenefits.Domain\WebApi.WorkerBenefits.Domain.csproj" />
   </ItemGroup>
 

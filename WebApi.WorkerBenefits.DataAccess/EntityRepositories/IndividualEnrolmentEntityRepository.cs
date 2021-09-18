@@ -34,6 +34,7 @@ namespace WebApi.WorkerBenefits.DataAccess.EntityRepositories
                                                                                      .ThenInclude(x => x.JobPosition)
                                                                                      .Include(x => x.Worker)
                                                                                      .ThenInclude(x => x.TechnologyType)
+                                                                                     .Include(x => x.Benefit)
                                                                                      .ToList();
             if (individualEnrolments.Count() == 0)
             {
@@ -68,8 +69,8 @@ namespace WebApi.WorkerBenefits.DataAccess.EntityRepositories
             {
                 throw new Exception($"Individual enrolment with ID: {entity.Id} not found!");
             }
-            individualEnrolment.Worker = entity.Worker;
             individualEnrolment.WorkerId = entity.WorkerId;
+            individualEnrolment.BenefitId = entity.BenefitId;
             individualEnrolment.EffectiveFrom = entity.EffectiveFrom;
             individualEnrolment.EffectiveTo = entity.EffectiveTo;
             individualEnrolment.CreatedOn = entity.CreatedOn;

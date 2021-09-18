@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using WebApi.WorkerBenefits.DataAccess;
+using WebApi.WorkerBenefits.DataTransferModels;
 using WebApi.WorkerBenefits.Domain.Models;
 using WebApi.WorkerBenefits.Services.Interfaces;
 
@@ -9,8 +11,8 @@ namespace WebApi.WorkerBenefits.Services
 {
     public class WorkerService : IWorkerService
     {
-        private IRepository<Worker> _workerRepository;
-        public WorkerService(IRepository<Worker> workerRepository)
+        private IWorkerEntityRepository _workerRepository;
+        public WorkerService(IWorkerEntityRepository workerRepository)
         {
             _workerRepository = workerRepository;
         }
@@ -28,6 +30,11 @@ namespace WebApi.WorkerBenefits.Services
         public List<Worker> GetAllWorkers()
         {
             return _workerRepository.GetAll();
+        }
+
+        public BenefitsForWorker GetAllBenefitsForWorkerById(int id)
+        {
+            return _workerRepository.GetAllBenefitsForWorkerById(id);
         }
 
         public Worker GetWorkerById(int id)

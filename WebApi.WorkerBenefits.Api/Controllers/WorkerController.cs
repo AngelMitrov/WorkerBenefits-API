@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApi.WorkerBenefits.DataTransferModels;
 using WebApi.WorkerBenefits.Domain.Models;
 using WebApi.WorkerBenefits.Services.Interfaces;
 
@@ -51,6 +52,12 @@ namespace WebApi.WorkerBenefits.Api.Controllers
         {
             _workerService.UpdateWorker(entity);
             return StatusCode(StatusCodes.Status200OK, "Worker Successfully Updated!");
+        }
+
+        [HttpGet("workerbenefits/{id}")]
+        public ActionResult<BenefitsForWorker> GetWorkerBenefitsById(int id)
+        {
+            return _workerService.GetAllBenefitsForWorkerById(id);
         }
     }
 }
