@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi.WorkerBenefits.DataA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi.WorkerBenefits.Domain", "WebApi.WorkerBenefits.Domain\WebApi.WorkerBenefits.Domain.csproj", "{1AE6047F-9C5A-49D0-9255-FA33436EBBA0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.WorkerBenefits.DataTransferObjects", "WebApi.WorkerBenefits.DataTransferObjects\WebApi.WorkerBenefits.DataTransferObjects.csproj", "{4E70E12C-E420-4C84-8AB2-80D03FEF5D0A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi.WorkerBenefits.DataTransferObjects", "WebApi.WorkerBenefits.DataTransferObjects\WebApi.WorkerBenefits.DataTransferObjects.csproj", "{4E70E12C-E420-4C84-8AB2-80D03FEF5D0A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.WorkerBenefits.Mappers", "WebApi.WorkerBenefits.Mappers\WebApi.WorkerBenefits.Mappers.csproj", "{9F196092-C0A7-40A7-99E1-04267A3BF1FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{4E70E12C-E420-4C84-8AB2-80D03FEF5D0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E70E12C-E420-4C84-8AB2-80D03FEF5D0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E70E12C-E420-4C84-8AB2-80D03FEF5D0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F196092-C0A7-40A7-99E1-04267A3BF1FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F196092-C0A7-40A7-99E1-04267A3BF1FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F196092-C0A7-40A7-99E1-04267A3BF1FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F196092-C0A7-40A7-99E1-04267A3BF1FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

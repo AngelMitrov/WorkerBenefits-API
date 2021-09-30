@@ -5,6 +5,7 @@ using System.Text;
 using WebApi.WorkerBenefits.DataAccess;
 using WebApi.WorkerBenefits.DataTransferObjects;
 using WebApi.WorkerBenefits.Domain.Models;
+using WebApi.WorkerBenefits.Mappers;
 using WebApi.WorkerBenefits.Services.Interfaces;
 
 namespace WebApi.WorkerBenefits.Services
@@ -18,6 +19,7 @@ namespace WebApi.WorkerBenefits.Services
         }
         public int AddNewWorker(Worker entity)
         {
+            entity.Password = entity.Password.GenerateMD5();
             _workerRepository.Insert(entity);
             return entity.Id;
         }
