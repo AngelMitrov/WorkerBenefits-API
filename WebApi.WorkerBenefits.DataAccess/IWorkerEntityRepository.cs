@@ -9,5 +9,6 @@ namespace WebApi.WorkerBenefits.DataAccess
     public interface IWorkerEntityRepository : IRepository<Worker>
     {
         BenefitsForWorkerDTO GetAllBenefitsForWorkerById(int id);
+        Worker GetWorkerByUsernameAndPass(string username, string pass);
     }
 }

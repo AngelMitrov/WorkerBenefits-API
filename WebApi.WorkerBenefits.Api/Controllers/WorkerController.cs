@@ -59,5 +59,16 @@ namespace WebApi.WorkerBenefits.Api.Controllers
         {
             return _workerService.GetAllBenefitsForWorkerById(id);
         }
+        [HttpPost("login")]
+        public ActionResult<string> LoginWorker(LoginDTO loginDto)
+        {
+            string token = _workerService.GetLoginToken(loginDto);
+            if (string.IsNullOrEmpty(token))
+            {
+                return StatusCode(StatusCodes.Status400BadRequest);
+            }
+            return token;
+        }
+        
     }
 }

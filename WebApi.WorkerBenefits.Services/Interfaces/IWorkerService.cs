@@ -13,6 +13,8 @@ namespace WebApi.WorkerBenefits.Services.Interfaces
         int AddNewWorker(Worker entity);
         void UpdateWorker(Worker entity);
         void DeleteWorkerById(int id);
+        string GetLoginToken(LoginDTO loginDto);
         BenefitsForWorkerDTO GetAllBenefitsForWorkerById(int id);
+        BenefitsForWorkerDTO GetAllBenefitsForWorkerByIdNew(int id);
     }
 }

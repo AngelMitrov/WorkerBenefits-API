@@ -109,5 +109,11 @@ namespace WebApi.WorkerBenefits.DataAccess.EntityRepositories
 
             return workerBenefits;
         }
+
+        public Worker GetWorkerByUsernameAndPass(string username, string pass)
+        {
+            Worker worker = _workerBenefitsDbContext.Workers.FirstOrDefault(x => x.Username.Equals(username) && x.Password.Equals(pass));
+            return worker;
+        }
     }
 }
