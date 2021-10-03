@@ -100,12 +100,12 @@ namespace WebApi.WorkerBenefits.DataAccess.EntityRepositories
                                                                 .Benefit;
             List<Benefit> benefits = new List<Benefit>() { jobPositionBenefit, technologyTypeBenefit, individualBenefit };
 
-            BenefitsForWorkerDTO workerBenefits = new BenefitsForWorkerDTO()
-            {
-                WorkerId = worker.Id,
-                Worker = worker,
-                Benefits = benefits,
-            };
+            BenefitsForWorkerDTO workerBenefits = new BenefitsForWorkerDTO();
+            //{
+            //    WorkerId = worker.Id,
+            //    Worker = worker,
+            //    Benefits = benefits,
+            //};
 
             return workerBenefits;
         }

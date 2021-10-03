@@ -1,14 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using WebApi.WorkerBenefits.DataAccess;
-using WebApi.WorkerBenefits.DataAccess.EntityRepositories;
-using WebApi.WorkerBenefits.Domain.Enums;
-using WebApi.WorkerBenefits.Domain.Models;
+using WebApi.WorkerBenefits.DataTransferObjects;
 using WebApi.WorkerBenefits.Services;
 
 namespace WebApi.WorkerBenefits.Api.Controllers
@@ -27,19 +21,19 @@ namespace WebApi.WorkerBenefits.Api.Controllers
         }
 
         [HttpGet("all")]
-        public ActionResult<List<Benefit>> GetAllBenefits()
+        public ActionResult<List<BenefitDTO>> GetAllBenefits()
         {
             return _benefitService.GetAllBenefits();
         }
 
         [HttpGet("all/{id}")]
-        public ActionResult<Benefit> GetBenefitsById([FromRoute] int id)
+        public ActionResult<BenefitDTO> GetBenefitsById([FromRoute] int id)
         {
             return _benefitService.GetBenefitById(id);
         }
 
         [HttpPut("update")]
-        public IActionResult UpdateBenefit([FromBody] Benefit benefit)
+        public IActionResult UpdateBenefit([FromBody] BenefitDTO benefit)
         {
             _benefitService.UpdateBenefit(benefit);
             return StatusCode(StatusCodes.Status200OK, "Benefit Successfully Updated!");
@@ -54,7 +48,7 @@ namespace WebApi.WorkerBenefits.Api.Controllers
 
 
         [HttpPost("add")]
-        public IActionResult AddBenefit(Benefit entity)
+        public IActionResult AddBenefit(BenefitDTO entity)
         {
             _benefitService.AddNewBenefit(entity);
             return StatusCode(StatusCodes.Status201Created, "Benefit Successfully Created!");

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using WebApi.WorkerBenefits.DataAccess;
+using WebApi.WorkerBenefits.DataTransferObjects;
 using WebApi.WorkerBenefits.Domain.Models;
+using WebApi.WorkerBenefits.Mappers;
 
 namespace WebApi.WorkerBenefits.Services
 {
@@ -16,9 +18,9 @@ namespace WebApi.WorkerBenefits.Services
             _jobPositionRepository = jobPositionRepository;
         }
 
-        public int AddNewJobPosition(JobPosition entity)
+        public int AddNewJobPosition(JobPositionDTO entity)
         {
-            _jobPositionRepository.Insert(entity);
+            _jobPositionRepository.Insert(entity.MapFromModelToDTO<JobPositionDTO, JobPosition>());
             return entity.Id;
         }
 
@@ -27,20 +29,26 @@ namespace WebApi.WorkerBenefits.Services
             _jobPositionRepository.DeleteById(id);
         }
 
-        public List<JobPosition> GetAllJobPositions()
+        public List<JobPositionDTO> GetAllJobPositions()
         {
-            return _jobPositionRepository.GetAll();
+            List<JobPosition> jobPositions = _jobPositionRepository.GetAll();
+            List<JobPositionDTO> jobPositionDtos = new List<JobPositionDTO>();
+            foreach (JobPosition jobPosition in jobPositions)
+            {
+                jobPositionDtos.Add(jobPosition.MapFromModelToDTO<JobPosition, JobPositionDTO>());
+            }
+            return jobPositionDtos;
         }
 
-        public JobPosition GetJobPositionById(int id)
+        public JobPositionDTO GetJobPositionById(int id)
         {
-            return _jobPositionRepository.GetById(id);
+            return _jobPositionRepository.GetById(id).MapFromModelToDTO<JobPosition, JobPositionDTO>();
         }
 
 
-        public void UpdateJobPosition(JobPosition entity)
+        public void UpdateJobPosition(JobPositionDTO entity)
         {
-            _jobPositionRepository.Update(entity);
+            _jobPositionRepository.Update(entity.MapFromModelToDTO<JobPositionDTO, JobPosition>());
         }
     }
 }

@@ -4,6 +4,8 @@ using System.Text;
 using WebApi.WorkerBenefits.DataAccess;
 using WebApi.WorkerBenefits.Domain.Models;
 using WebApi.WorkerBenefits.Services.Interfaces;
+using WebApi.WorkerBenefits.Mappers;
+using WebApi.WorkerBenefits.DataTransferObjects;
 
 namespace WebApi.WorkerBenefits.Services
 {
@@ -16,9 +18,9 @@ namespace WebApi.WorkerBenefits.Services
             _technologyTypeEnrolmentRepository = technologyTypeEnrolmentRepository;
         }
 
-        public int AddNewTechnologyTypeEnrolment(TechnologyTypeEnrolment entity)
+        public int AddNewTechnologyTypeEnrolment(TechnologyTypeEnrolmentDTO entity)
         {
-            _technologyTypeEnrolmentRepository.Insert(entity);
+            _technologyTypeEnrolmentRepository.Insert(entity.MapFromModelToDTO<TechnologyTypeEnrolmentDTO, TechnologyTypeEnrolment>());
             return entity.Id;
         }
 
@@ -27,19 +29,27 @@ namespace WebApi.WorkerBenefits.Services
             _technologyTypeEnrolmentRepository.DeleteById(id);
         }
 
-        public List<TechnologyTypeEnrolment> GetAllTechnologyTypeEnrolments()
+        public List<TechnologyTypeEnrolmentDTO> GetAllTechnologyTypeEnrolments()
         {
-            return _technologyTypeEnrolmentRepository.GetAll();
+            List<TechnologyTypeEnrolment> techTypeEnrolments = _technologyTypeEnrolmentRepository.GetAll();
+            List<TechnologyTypeEnrolmentDTO> techTypeEnrolmentsDto = new List<TechnologyTypeEnrolmentDTO>();
+
+            foreach (TechnologyTypeEnrolment techTypeEnrolment in techTypeEnrolments)
+            {
+                techTypeEnrolmentsDto.Add(techTypeEnrolment.MapFromModelToDTO<TechnologyTypeEnrolment, TechnologyTypeEnrolmentDTO>());
+            }
+
+            return techTypeEnrolmentsDto;
         }
 
-        public TechnologyTypeEnrolment GetTechnologyTypeEnrolmentById(int id)
+        public TechnologyTypeEnrolmentDTO GetTechnologyTypeEnrolmentById(int id)
         {
-            return _technologyTypeEnrolmentRepository.GetById(id);
+            return _technologyTypeEnrolmentRepository.GetById(id).MapFromModelToDTO<TechnologyTypeEnrolment, TechnologyTypeEnrolmentDTO>();
         }
 
-        public void UpdateTechnologyTypeEnrolment(TechnologyTypeEnrolment entity)
+        public void UpdateTechnologyTypeEnrolment(TechnologyTypeEnrolmentDTO entity)
         {
-            _technologyTypeEnrolmentRepository.Update(entity);
+            _technologyTypeEnrolmentRepository.Update(entity.MapFromModelToDTO<TechnologyTypeEnrolmentDTO, TechnologyTypeEnrolment>());
         }
     }
 }

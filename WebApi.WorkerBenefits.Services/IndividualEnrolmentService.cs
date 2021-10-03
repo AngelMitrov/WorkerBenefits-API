@@ -2,21 +2,24 @@
 using System.Collections.Generic;
 using System.Text;
 using WebApi.WorkerBenefits.DataAccess;
+using WebApi.WorkerBenefits.DataTransferObjects;
 using WebApi.WorkerBenefits.Domain.Models;
+using WebApi.WorkerBenefits.Mappers;
 using WebApi.WorkerBenefits.Services.Interfaces;
 
 namespace WebApi.WorkerBenefits.Services
 {
     public class IndividualEnrolmentService : IIndividualEnrolmentService
     {
-        public IRepository<IndividualEnrolment> _individualEnrolmentRepository;
+        private IRepository<IndividualEnrolment> _individualEnrolmentRepository;
         public IndividualEnrolmentService(IRepository<IndividualEnrolment> individualEnrolmentRepository)
         {
             _individualEnrolmentRepository = individualEnrolmentRepository;
         }
-        public int AddNewIndividualEnrolment(IndividualEnrolment entity)
+        public int AddNewIndividualEnrolment(IndividualEnrolmentDTO entity)
         {
-            _individualEnrolmentRepository.Insert(entity);
+            _individualEnrolmentRepository.Insert(entity.MapFromModelToDTO<IndividualEnrolmentDTO, IndividualEnrolment>());
+
             return entity.Id;
         }
 
@@ -25,19 +28,27 @@ namespace WebApi.WorkerBenefits.Services
             _individualEnrolmentRepository.DeleteById(id);
         }
 
-        public List<IndividualEnrolment> GetAllIndividualEnrolments()
+        public List<IndividualEnrolmentDTO> GetAllIndividualEnrolments()
         {
-            return _individualEnrolmentRepository.GetAll();
+            List<IndividualEnrolmentDTO> indEnrolmentDtos = new List<IndividualEnrolmentDTO>();
+            List<IndividualEnrolment> indEnrolments = _individualEnrolmentRepository.GetAll();
+
+            foreach (IndividualEnrolment indEnrolment in indEnrolments)
+            {
+                indEnrolmentDtos.Add(indEnrolment.MapFromModelToDTO<IndividualEnrolment, IndividualEnrolmentDTO>());
+            }
+            return indEnrolmentDtos;
+
         }
 
-        public IndividualEnrolment GetIndividualEnrolmentById(int id)
+        public IndividualEnrolmentDTO GetIndividualEnrolmentById(int id)
         {
-            return _individualEnrolmentRepository.GetById(id);
+            return _individualEnrolmentRepository.GetById(id).MapFromModelToDTO<IndividualEnrolment, IndividualEnrolmentDTO>();
         }
 
-        public void UpdateIndividualEnrolment(IndividualEnrolment entity)
+        public void UpdateIndividualEnrolment(IndividualEnrolmentDTO entity)
         {
-            _individualEnrolmentRepository.Update(entity);
+            _individualEnrolmentRepository.Update(entity.MapFromModelToDTO<IndividualEnrolmentDTO, IndividualEnrolment>());
         }
     }
 }

@@ -1,12 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using WebApi.WorkerBenefits.DataAccess;
-using WebApi.WorkerBenefits.Domain.Models;
+using WebApi.WorkerBenefits.DataTransferObjects;
 using WebApi.WorkerBenefits.Services;
 
 namespace WebApi.WorkerBenefits.Api.Controllers
@@ -25,14 +21,14 @@ namespace WebApi.WorkerBenefits.Api.Controllers
 
 
         [HttpGet("all")]
-        public ActionResult<List<JobPosition>> GetAllJobPositions()
+        public ActionResult<List<JobPositionDTO>> GetAllJobPositions()
         {
             return _jobPositionService.GetAllJobPositions();
         }
 
 
         [HttpGet("all/{id}")]
-        public ActionResult<JobPosition> GetJobPositionById([FromRoute] int id)
+        public ActionResult<JobPositionDTO> GetJobPositionById([FromRoute] int id)
         {
             return _jobPositionService.GetJobPositionById(id);
 
@@ -40,7 +36,7 @@ namespace WebApi.WorkerBenefits.Api.Controllers
 
 
         [HttpPost("add")]
-        public IActionResult AddNewJobPosition([FromBody] JobPosition newJobPosition)
+        public IActionResult AddNewJobPosition([FromBody] JobPositionDTO newJobPosition)
         {
             _jobPositionService.AddNewJobPosition(newJobPosition);
             return StatusCode(StatusCodes.Status201Created, "Job Position Successfully Created!");
@@ -56,7 +52,7 @@ namespace WebApi.WorkerBenefits.Api.Controllers
 
 
         [HttpPut("update")]
-        public IActionResult UpdateJobPosition([FromBody] JobPosition entity)
+        public IActionResult UpdateJobPosition([FromBody] JobPositionDTO entity)
         {
             _jobPositionService.UpdateJobPosition(entity);
             return StatusCode(StatusCodes.Status200OK, "Job Position Successfully Updated!");

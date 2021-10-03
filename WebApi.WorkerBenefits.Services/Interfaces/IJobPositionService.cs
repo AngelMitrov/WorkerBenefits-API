@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using WebApi.WorkerBenefits.Domain.Models;
+using WebApi.WorkerBenefits.DataTransferObjects;
 
 namespace WebApi.WorkerBenefits.Services
 {
     public interface IJobPositionService
     {
-        List<JobPosition> GetAllJobPositions();
-        JobPosition GetJobPositionById(int id);
-        int AddNewJobPosition(JobPosition entity);
-        void UpdateJobPosition(JobPosition entity);
+        List<JobPositionDTO> GetAllJobPositions();
+        JobPositionDTO GetJobPositionById(int id);
+        int AddNewJobPosition(JobPositionDTO entity);
+        void UpdateJobPosition(JobPositionDTO entity);
         void DeleteJobPositionById(int id);
     }
 }

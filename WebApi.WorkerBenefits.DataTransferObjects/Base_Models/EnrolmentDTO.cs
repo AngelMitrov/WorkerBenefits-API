@@ -9,6 +9,6 @@ namespace WebApi.WorkerBenefits.DataTransferObjects.Base_Models
         public DateTime EffectiveFrom { get; set; }
         public DateTime EffectiveTo { get; set; }
         public int BenefitId { get; set; }
-        public Benefit Benefit { get; set; }
+        public BenefitDTO Benefit { get; set; }
     }
 }

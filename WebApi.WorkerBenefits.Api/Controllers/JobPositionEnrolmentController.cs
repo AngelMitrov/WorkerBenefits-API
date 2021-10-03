@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApi.WorkerBenefits.DataTransferObjects;
 using WebApi.WorkerBenefits.Domain.Models;
 using WebApi.WorkerBenefits.Services.Interfaces;
 
@@ -23,19 +24,19 @@ namespace WebApi.WorkerBenefits.Api.Controllers
         }
 
         [HttpGet("all")]
-        public ActionResult<List<JobPositionEnrolment>> GetAllJobPositionEnrolments()
+        public ActionResult<List<JobPositionEnrolmentDTO>> GetAllJobPositionEnrolments()
         {
             return _jobPositionEnrolmentService.GetAllJobPositionEnrolments();
         }
 
         [HttpGet("all/{id}")]
-        public ActionResult<JobPositionEnrolment> GetJobPositionEnrolmentById([FromRoute] int id)
+        public ActionResult<JobPositionEnrolmentDTO> GetJobPositionEnrolmentById([FromRoute] int id)
         {
             return _jobPositionEnrolmentService.GetJobPositionEnrolmentById(id);
         }
 
         [HttpPost("add")]
-        public IActionResult AddNewJobPositionEnrolment([FromBody] JobPositionEnrolment newJobPositionEnrolment)
+        public IActionResult AddNewJobPositionEnrolment([FromBody] JobPositionEnrolmentDTO newJobPositionEnrolment)
         {
             _jobPositionEnrolmentService.AddNewJobPositionEnrolment(newJobPositionEnrolment);
             return StatusCode(StatusCodes.Status201Created, "Job Position Enrolment Successfully Created!");
@@ -50,7 +51,7 @@ namespace WebApi.WorkerBenefits.Api.Controllers
 
 
         [HttpPut("update")]
-        public IActionResult UpdateJobPositionEnrolment([FromBody] JobPositionEnrolment entity)
+        public IActionResult UpdateJobPositionEnrolment([FromBody] JobPositionEnrolmentDTO entity)
         {
             _jobPositionEnrolmentService.UpdateJobPositionEnrolment(entity);
             return StatusCode(StatusCodes.Status200OK, "Job Position Enrolemnt Successfully Updated!");

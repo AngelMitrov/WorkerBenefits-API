@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApi.WorkerBenefits.DataTransferObjects;
 using WebApi.WorkerBenefits.Domain.Models;
 using WebApi.WorkerBenefits.Services.Interfaces;
 
@@ -23,19 +24,19 @@ namespace WebApi.WorkerBenefits.Api.Controllers
         }
 
         [HttpGet("all")]
-        public ActionResult<List<TechnologyTypeEnrolment>> GetAllTechnologyTypeEnrolments()
+        public ActionResult<List<TechnologyTypeEnrolmentDTO>> GetAllTechnologyTypeEnrolments()
         {
             return _technologyTypeEnrolmentService.GetAllTechnologyTypeEnrolments();
         }
 
         [HttpGet("all/{id}")]
-        public ActionResult<TechnologyTypeEnrolment> GetTechnologyTypeEnrolmentById([FromRoute] int id)
+        public ActionResult<TechnologyTypeEnrolmentDTO> GetTechnologyTypeEnrolmentById([FromRoute] int id)
         {
             return _technologyTypeEnrolmentService.GetTechnologyTypeEnrolmentById(id);
         }
 
         [HttpPost("add")]
-        public IActionResult AddNewTechnologyTypeEnrolment([FromBody] TechnologyTypeEnrolment newTechnologyTypeEnrolment)
+        public IActionResult AddNewTechnologyTypeEnrolment([FromBody] TechnologyTypeEnrolmentDTO newTechnologyTypeEnrolment)
         {
             _technologyTypeEnrolmentService.AddNewTechnologyTypeEnrolment(newTechnologyTypeEnrolment);
             return StatusCode(StatusCodes.Status201Created, "Technology Type Enrolment Successfully Created!");
@@ -49,7 +50,7 @@ namespace WebApi.WorkerBenefits.Api.Controllers
         }
 
         [HttpPut("update")]
-        public IActionResult UpdateTechnologyTypeEnrolment([FromBody] TechnologyTypeEnrolment entity)
+        public IActionResult UpdateTechnologyTypeEnrolment([FromBody] TechnologyTypeEnrolmentDTO entity)
         {
             _technologyTypeEnrolmentService.UpdateTechnologyTypeEnrolment(entity);
             return StatusCode(StatusCodes.Status200OK, "Technology Type Enrolment Successfully Updated!");

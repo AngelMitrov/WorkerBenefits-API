@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using WebApi.WorkerBenefits.Domain.Models;
+using WebApi.WorkerBenefits.DataTransferObjects;
 using WebApi.WorkerBenefits.Services.Interfaces;
 
 namespace WebApi.WorkerBenefits.Api.Controllers
@@ -23,19 +20,19 @@ namespace WebApi.WorkerBenefits.Api.Controllers
         }
 
         [HttpGet("all")]
-        public ActionResult<List<IndividualEnrolment>> GetAllIndividualEnrolments()
+        public ActionResult<List<IndividualEnrolmentDTO>> GetAllIndividualEnrolments()
         {
             return _individualEnrolmentService.GetAllIndividualEnrolments();
         }
 
         [HttpGet("all/{id}")]
-        public ActionResult<IndividualEnrolment> GetIndividualEnrolmentsById([FromRoute] int id)
+        public ActionResult<IndividualEnrolmentDTO> GetIndividualEnrolmentsById([FromRoute] int id)
         {
             return _individualEnrolmentService.GetIndividualEnrolmentById(id);
         }
 
         [HttpPut("update")]
-        public IActionResult UpdateIndividualEnrolment([FromBody] IndividualEnrolment individualEnrolment)
+        public IActionResult UpdateIndividualEnrolment([FromBody] IndividualEnrolmentDTO individualEnrolment)
         {
             _individualEnrolmentService.UpdateIndividualEnrolment(individualEnrolment);
             return StatusCode(StatusCodes.Status200OK, "Individual Enrolment Successfully Updated!");
@@ -49,7 +46,7 @@ namespace WebApi.WorkerBenefits.Api.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult AddIndividualEnrolment(IndividualEnrolment entity)
+        public IActionResult AddIndividualEnrolment(IndividualEnrolmentDTO entity)
         {
             _individualEnrolmentService.AddNewIndividualEnrolment(entity);
             return StatusCode(StatusCodes.Status201Created, "Individual Enrolment Successfully Created!");

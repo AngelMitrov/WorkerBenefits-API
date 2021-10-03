@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApi.WorkerBenefits.DataTransferObjects;
-using WebApi.WorkerBenefits.Domain.Models;
 using WebApi.WorkerBenefits.Services.Interfaces;
 
 namespace WebApi.WorkerBenefits.Api.Controllers
@@ -24,20 +23,20 @@ namespace WebApi.WorkerBenefits.Api.Controllers
         }
 
         [HttpGet("all")]
-        public ActionResult<List<Worker>> GetAllWorkers()
+        public ActionResult<List<WorkerDTO>> GetAllWorkers()
         {
             return _workerService.GetAllWorkers();
         }
 
         [HttpGet("all/{id}")]
-        public ActionResult<Worker> GetWorkerById([FromRoute] int id)
+        public ActionResult<WorkerDTO> GetWorkerById([FromRoute] int id)
         {
             return _workerService.GetWorkerById(id);
         }
 
         [AllowAnonymous]
         [HttpPost("add")]
-        public IActionResult AddNewWorker([FromBody] Worker newWorker)
+        public IActionResult AddNewWorker([FromBody] WorkerDTO newWorker)
         {
             _workerService.AddNewWorker(newWorker);
             return StatusCode(StatusCodes.Status201Created, "Worker Successfully Created!");
@@ -51,7 +50,7 @@ namespace WebApi.WorkerBenefits.Api.Controllers
         }
 
         [HttpPut("update")]
-        public IActionResult UpdateWorker([FromBody] Worker entity)
+        public IActionResult UpdateWorker([FromBody] WorkerDTO entity)
         {
             _workerService.UpdateWorker(entity);
             return StatusCode(StatusCodes.Status200OK, "Worker Successfully Updated!");

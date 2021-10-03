@@ -2,16 +2,15 @@
 using System.Collections.Generic;
 using System.Text;
 using WebApi.WorkerBenefits.DataTransferObjects;
-using WebApi.WorkerBenefits.Domain.Models;
 
 namespace WebApi.WorkerBenefits.Services.Interfaces
 {
     public interface IWorkerService
     {
-        List<Worker> GetAllWorkers();
-        Worker GetWorkerById(int id);
-        int AddNewWorker(Worker entity);
-        void UpdateWorker(Worker entity);
+        List<WorkerDTO> GetAllWorkers();
+        WorkerDTO GetWorkerById(int id);
+        int AddNewWorker(WorkerDTO entity);
+        void UpdateWorker(WorkerDTO entity);
         void DeleteWorkerById(int id);
         string GetLoginToken(LoginDTO loginDto);
         BenefitsForWorkerDTO GetAllBenefitsForWorkerById(int id);

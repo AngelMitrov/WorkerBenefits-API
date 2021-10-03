@@ -19,17 +19,20 @@ namespace WebApi.WorkerBenefits.Services
         private IRepository<TechnologyTypeEnrolment> _technologyTypeEnrolmentRepository;
         private IRepository<JobPositionEnrolment> _jobPositionEnrolmentRepository;
         private IRepository<IndividualEnrolment> _individualEnrolmentRepository;
-        public WorkerService(IWorkerEntityRepository workerRepository, IRepository<TechnologyTypeEnrolment> technologyTypeEnrolmentRepository, IRepository<JobPositionEnrolment> jobPositionEnrolmentRepository, IRepository<IndividualEnrolment> individualEnrolmentRepository)
+        public WorkerService(IWorkerEntityRepository workerRepository, 
+                             IRepository<TechnologyTypeEnrolment> technologyTypeEnrolmentRepository,
+                             IRepository<JobPositionEnrolment> jobPositionEnrolmentRepository, 
+                             IRepository<IndividualEnrolment> individualEnrolmentRepository)
         {
             _workerRepository = workerRepository;
             _technologyTypeEnrolmentRepository = technologyTypeEnrolmentRepository;
             _jobPositionEnrolmentRepository = jobPositionEnrolmentRepository;
             _individualEnrolmentRepository = individualEnrolmentRepository;
         }
-        public int AddNewWorker(Worker entity)
+        public int AddNewWorker(WorkerDTO entity)
         {
             entity.Password = entity.Password.GenerateMD5();
-            _workerRepository.Insert(entity);
+            _workerRepository.Insert(entity.MapFromModelToDTO<WorkerDTO, Worker>());
             return entity.Id;
         }
 
@@ -38,9 +41,18 @@ namespace WebApi.WorkerBenefits.Services
             _workerRepository.DeleteById(id);
         }
 
-        public List<Worker> GetAllWorkers()
+        public List<WorkerDTO> GetAllWorkers()
         {
-            return _workerRepository.GetAll();
+            List<WorkerDTO> workersDto = new List<WorkerDTO>();
+            List<Worker> workersDomain = _workerRepository.GetAll();
+
+            foreach (Worker worker in workersDomain)
+            {
+                WorkerDTO mappedWorker = worker.MapFromModelToDTO<Worker, WorkerDTO>();
+                workersDto.Add(mappedWorker);
+            }
+
+            return workersDto;
         }
 
         public BenefitsForWorkerDTO GetAllBenefitsForWorkerById(int id)
@@ -48,14 +60,16 @@ namespace WebApi.WorkerBenefits.Services
             return _workerRepository.GetAllBenefitsForWorkerById(id);
         }
 
-        public Worker GetWorkerById(int id)
+        public WorkerDTO GetWorkerById(int id)
         {
-            return _workerRepository.GetById(id);
+            WorkerDTO worker = _workerRepository.GetById(id).MapFromModelToDTO<Worker, WorkerDTO>();
+
+            return worker;
         }
 
-        public void UpdateWorker(Worker entity)
+        public void UpdateWorker(WorkerDTO entity)
         {
-            _workerRepository.Update(entity);
+            _workerRepository.Update(entity.MapFromModelToDTO<WorkerDTO, Worker>());
         }
 
         public BenefitsForWorkerDTO GetAllBenefitsForWorkerByIdNew(int id)

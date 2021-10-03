@@ -4,6 +4,8 @@ using System.Text;
 using WebApi.WorkerBenefits.DataAccess;
 using WebApi.WorkerBenefits.Domain.Models;
 using WebApi.WorkerBenefits.Services.Interfaces;
+using WebApi.WorkerBenefits.Mappers;
+using WebApi.WorkerBenefits.DataTransferObjects;
 
 namespace WebApi.WorkerBenefits.Services
 {
@@ -16,9 +18,9 @@ namespace WebApi.WorkerBenefits.Services
             _technologyTypeRepository = technologyTypeRepository;
         }
 
-        public int AddNewTechnologyType(TechnologyType entity)
+        public int AddNewTechnologyType(TechnologyTypeDTO entity)
         {
-            _technologyTypeRepository.Insert(entity);
+            _technologyTypeRepository.Insert(entity.MapFromModelToDTO<TechnologyTypeDTO, TechnologyType>());
             return entity.Id;
         }
 
@@ -27,19 +29,25 @@ namespace WebApi.WorkerBenefits.Services
             _technologyTypeRepository.DeleteById(id);
         }
 
-        public List<TechnologyType> GetAllTechnologyTypes()
+        public List<TechnologyTypeDTO> GetAllTechnologyTypes()
         {
-            return _technologyTypeRepository.GetAll();
+            List<TechnologyType> techTypes = _technologyTypeRepository.GetAll();
+            List<TechnologyTypeDTO> techTypesDto = new List<TechnologyTypeDTO>();
+            foreach (TechnologyType techType in techTypes)
+            {
+                techTypesDto.Add(techType.MapFromModelToDTO<TechnologyType, TechnologyTypeDTO>());
+            }
+            return techTypesDto; 
         }
 
-        public TechnologyType GetTechnologyTypeById(int id)
+        public TechnologyTypeDTO GetTechnologyTypeById(int id)
         {
-            return _technologyTypeRepository.GetById(id);
+            return _technologyTypeRepository.GetById(id).MapFromModelToDTO<TechnologyType, TechnologyTypeDTO>();
         }
 
-        public void UpdateTechnologyType(TechnologyType entity)
+        public void UpdateTechnologyType(TechnologyTypeDTO entity)
         {
-            _technologyTypeRepository.Update(entity);
+            _technologyTypeRepository.Update(entity.MapFromModelToDTO<TechnologyTypeDTO,TechnologyType>());
         }
     }
 }
