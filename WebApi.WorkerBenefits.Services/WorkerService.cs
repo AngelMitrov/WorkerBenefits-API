@@ -32,7 +32,7 @@ namespace WebApi.WorkerBenefits.Services
         public int AddNewWorker(WorkerDTO entity)
         {
             entity.Password = entity.Password.GenerateMD5();
-            _workerRepository.Insert(entity.MapFromModelToDTO<WorkerDTO, Worker>());
+            _workerRepository.Insert(entity.ToDomain());
             return entity.Id;
         }
 
@@ -48,7 +48,7 @@ namespace WebApi.WorkerBenefits.Services
 
             foreach (Worker worker in workersDomain)
             {
-                WorkerDTO mappedWorker = worker.MapFromModelToDTO<Worker, WorkerDTO>();
+                WorkerDTO mappedWorker = worker.ToDto();
                 workersDto.Add(mappedWorker);
             }
 
@@ -62,14 +62,14 @@ namespace WebApi.WorkerBenefits.Services
 
         public WorkerDTO GetWorkerById(int id)
         {
-            WorkerDTO worker = _workerRepository.GetById(id).MapFromModelToDTO<Worker, WorkerDTO>();
+            WorkerDTO worker = _workerRepository.GetById(id).ToDto();
 
             return worker;
         }
 
         public void UpdateWorker(WorkerDTO entity)
         {
-            _workerRepository.Update(entity.MapFromModelToDTO<WorkerDTO, Worker>());
+            _workerRepository.Update(entity.ToDomain());
         }
 
         public BenefitsForWorkerDTO GetAllBenefitsForWorkerByIdNew(int id)

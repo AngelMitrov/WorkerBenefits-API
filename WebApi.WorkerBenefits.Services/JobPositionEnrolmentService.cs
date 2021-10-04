@@ -22,7 +22,7 @@ namespace WebApi.WorkerBenefits.Services
 
         public int AddNewJobPositionEnrolment(JobPositionEnrolmentDTO entity)
         {
-            _jobPositionEnrolmentRepository.Insert(entity.MapFromModelToDTO<JobPositionEnrolmentDTO, JobPositionEnrolment>());
+            _jobPositionEnrolmentRepository.Insert(entity.ToDomain());
             return entity.Id;
         }
 
@@ -38,19 +38,19 @@ namespace WebApi.WorkerBenefits.Services
 
             foreach (JobPositionEnrolment jobPositionEnrolment in jobPosEnrolments)
             {
-                jobPosEnrolmentsDto.Add(jobPositionEnrolment.MapFromModelToDTO<JobPositionEnrolment, JobPositionEnrolmentDTO>());
+                jobPosEnrolmentsDto.Add(jobPositionEnrolment.ToDto());
             }
             return jobPosEnrolmentsDto;
         }
 
         public JobPositionEnrolmentDTO GetJobPositionEnrolmentById(int id)
         {
-            return _jobPositionEnrolmentRepository.GetById(id).MapFromModelToDTO<JobPositionEnrolment, JobPositionEnrolmentDTO>();
+            return _jobPositionEnrolmentRepository.GetById(id).ToDto();
         }
 
         public void UpdateJobPositionEnrolment(JobPositionEnrolmentDTO entity)
         {
-            _jobPositionEnrolmentRepository.Update(entity.MapFromModelToDTO<JobPositionEnrolmentDTO, JobPositionEnrolment>());
+            _jobPositionEnrolmentRepository.Update(entity.ToDomain());
         }
     }
 }

@@ -20,7 +20,7 @@ namespace WebApi.WorkerBenefits.Services
 
         public int AddNewTechnologyTypeEnrolment(TechnologyTypeEnrolmentDTO entity)
         {
-            _technologyTypeEnrolmentRepository.Insert(entity.MapFromModelToDTO<TechnologyTypeEnrolmentDTO, TechnologyTypeEnrolment>());
+            _technologyTypeEnrolmentRepository.Insert(entity.ToDomain());
             return entity.Id;
         }
 
@@ -36,7 +36,7 @@ namespace WebApi.WorkerBenefits.Services
 
             foreach (TechnologyTypeEnrolment techTypeEnrolment in techTypeEnrolments)
             {
-                techTypeEnrolmentsDto.Add(techTypeEnrolment.MapFromModelToDTO<TechnologyTypeEnrolment, TechnologyTypeEnrolmentDTO>());
+                techTypeEnrolmentsDto.Add(techTypeEnrolment.ToDto());
             }
 
             return techTypeEnrolmentsDto;
@@ -44,12 +44,12 @@ namespace WebApi.WorkerBenefits.Services
 
         public TechnologyTypeEnrolmentDTO GetTechnologyTypeEnrolmentById(int id)
         {
-            return _technologyTypeEnrolmentRepository.GetById(id).MapFromModelToDTO<TechnologyTypeEnrolment, TechnologyTypeEnrolmentDTO>();
+            return _technologyTypeEnrolmentRepository.GetById(id).ToDto();
         }
 
         public void UpdateTechnologyTypeEnrolment(TechnologyTypeEnrolmentDTO entity)
         {
-            _technologyTypeEnrolmentRepository.Update(entity.MapFromModelToDTO<TechnologyTypeEnrolmentDTO, TechnologyTypeEnrolment>());
+            _technologyTypeEnrolmentRepository.Update(entity.ToDomain());
         }
     }
 }

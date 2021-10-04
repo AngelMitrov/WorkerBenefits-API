@@ -18,7 +18,7 @@ namespace WebApi.WorkerBenefits.Services
 
         public int AddNewBenefit(BenefitDTO entity)
         {
-            _benefitRepository.Insert(entity.MapFromModelToDTO<BenefitDTO, Benefit>());
+            _benefitRepository.Insert(entity.ToDomain());
             return entity.Id;
         }
 
@@ -33,19 +33,19 @@ namespace WebApi.WorkerBenefits.Services
             List<Benefit> benefitDomain = _benefitRepository.GetAll();
             foreach (Benefit benefit in benefitDomain)
             {
-                benefitDtos.Add(benefit.MapFromModelToDTO<Benefit, BenefitDTO>());
+                benefitDtos.Add(benefit.ToDto());
             }
             return benefitDtos;
         }
 
         public BenefitDTO GetBenefitById(int id)
         {
-            return _benefitRepository.GetById(id).MapFromModelToDTO<Benefit, BenefitDTO>();
+            return _benefitRepository.GetById(id).ToDto();
         }
 
         public void UpdateBenefit(BenefitDTO entity)
         {
-            _benefitRepository.Update(entity.MapFromModelToDTO<BenefitDTO, Benefit>());
+            _benefitRepository.Update(entity.ToDomain());
         }
     }
 }

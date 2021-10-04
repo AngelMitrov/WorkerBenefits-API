@@ -20,7 +20,7 @@ namespace WebApi.WorkerBenefits.Services
 
         public int AddNewTechnologyType(TechnologyTypeDTO entity)
         {
-            _technologyTypeRepository.Insert(entity.MapFromModelToDTO<TechnologyTypeDTO, TechnologyType>());
+            _technologyTypeRepository.Insert(entity.ToDomain());
             return entity.Id;
         }
 
@@ -35,19 +35,19 @@ namespace WebApi.WorkerBenefits.Services
             List<TechnologyTypeDTO> techTypesDto = new List<TechnologyTypeDTO>();
             foreach (TechnologyType techType in techTypes)
             {
-                techTypesDto.Add(techType.MapFromModelToDTO<TechnologyType, TechnologyTypeDTO>());
+                techTypesDto.Add(techType.ToDto());
             }
             return techTypesDto; 
         }
 
         public TechnologyTypeDTO GetTechnologyTypeById(int id)
         {
-            return _technologyTypeRepository.GetById(id).MapFromModelToDTO<TechnologyType, TechnologyTypeDTO>();
+            return _technologyTypeRepository.GetById(id).ToDto();
         }
 
         public void UpdateTechnologyType(TechnologyTypeDTO entity)
         {
-            _technologyTypeRepository.Update(entity.MapFromModelToDTO<TechnologyTypeDTO,TechnologyType>());
+            _technologyTypeRepository.Update(entity.ToDomain());
         }
     }
 }

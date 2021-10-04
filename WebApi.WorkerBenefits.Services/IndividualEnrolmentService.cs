@@ -18,7 +18,7 @@ namespace WebApi.WorkerBenefits.Services
         }
         public int AddNewIndividualEnrolment(IndividualEnrolmentDTO entity)
         {
-            _individualEnrolmentRepository.Insert(entity.MapFromModelToDTO<IndividualEnrolmentDTO, IndividualEnrolment>());
+            _individualEnrolmentRepository.Insert(entity.ToDomain());
 
             return entity.Id;
         }
@@ -35,7 +35,7 @@ namespace WebApi.WorkerBenefits.Services
 
             foreach (IndividualEnrolment indEnrolment in indEnrolments)
             {
-                indEnrolmentDtos.Add(indEnrolment.MapFromModelToDTO<IndividualEnrolment, IndividualEnrolmentDTO>());
+                indEnrolmentDtos.Add(indEnrolment.ToDto());
             }
             return indEnrolmentDtos;
 
@@ -43,12 +43,12 @@ namespace WebApi.WorkerBenefits.Services
 
         public IndividualEnrolmentDTO GetIndividualEnrolmentById(int id)
         {
-            return _individualEnrolmentRepository.GetById(id).MapFromModelToDTO<IndividualEnrolment, IndividualEnrolmentDTO>();
+            return _individualEnrolmentRepository.GetById(id).ToDto();
         }
 
         public void UpdateIndividualEnrolment(IndividualEnrolmentDTO entity)
         {
-            _individualEnrolmentRepository.Update(entity.MapFromModelToDTO<IndividualEnrolmentDTO, IndividualEnrolment>());
+            _individualEnrolmentRepository.Update(entity.ToDomain());
         }
     }
 }
